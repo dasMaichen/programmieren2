@@ -322,7 +322,7 @@ public class Level {
      * @param p the p
      */
     public void startBattle(Player p) {
-        Character m = randomMonster();
+        Creature m = randomMonster();
 
         Scanner sc = new Scanner(System.in);
         

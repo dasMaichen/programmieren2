@@ -49,7 +49,7 @@ public class WaitingMonster extends Monster {
      * @return the damage
      */
     @Override
-    public int attack(Character c) {
+    public int attack(Creature c) {
         if (waited) {
             int atkOld = getAtk();
             setAtk(getAtk()*2);

@@ -1,7 +1,7 @@
 /**
  * The type Player.
  */
-public class Player extends Character {
+public class Player extends Creature {
     /**
      * The Max ap.
      */
@@ -146,7 +146,7 @@ public class Player extends Character {
      * @param m the enemy
      * @return the damage
      */
-    public int hardHit(Character m) {
+    public int hardHit(Creature m) {
         if (!useAp(HARD_HIT_COST)) {
             return -1;
         } else {
@@ -164,7 +164,7 @@ public class Player extends Character {
      * @param m the enemy
      * @return the damage
      */
-    public int fireball(Character m) {
+    public int fireball(Creature m) {
         if (!useAp(FIREBALL_COST)) {
             return -1;
         } else {

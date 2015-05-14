@@ -1,7 +1,7 @@
 /**
  * The type Monster.
  */
-public class Monster extends Character {
+public class Monster extends Creature {
 
     /**
      * Gets name.

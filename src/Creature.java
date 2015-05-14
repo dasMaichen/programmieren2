@@ -1,7 +1,7 @@
 /**
  * The type Character.
  */
-public class Character {
+public class Creature {
     /**
      * The Max hp.
      */
@@ -35,7 +35,7 @@ public class Character {
      * @param atk       the atk
      * @param hitChance the hit chance
      */
-    public Character(int maxHp, int atk, double hitChance) {
+    public Creature(int maxHp, int atk, double hitChance) {
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.atk = atk;
@@ -150,7 +150,7 @@ public class Character {
      * @param c the enemy
      * @return -1, für Verfehlt, sonst den angerichteten Schaden
      */
-    public int attack(Character c) {
+    public int attack(Creature c) {
         if (Math.random() <= hitChance) {
             int damage = (int) (atk * (Math.random() + 1.0));
             return c.takeDamage(damage);
