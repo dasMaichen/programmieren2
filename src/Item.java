@@ -3,6 +3,29 @@ import java.util.Random;
 /**
  * Created by dasMaichen on 14.05.15.
  */
+
+
+/*Die Lösung ohne Einschränkung wäre so:
+
+    public class Item implements Comparable {
+
+    [...]
+
+    dann müsste man bei der Methode comparable:
+
+     public int compareTo(Object anderesObjekt) {
+        Item anderesItem = (Item) anderesObjekt;
+
+            --> ist kein Item wird Exception geworfen (ClassCastException).
+
+     [...]
+
+       }
+     }
+  */
+
+
+
 public class Item implements Comparable<Item> {
 
 
