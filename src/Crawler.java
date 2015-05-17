@@ -11,24 +11,44 @@ public class Crawler {
      */
     public static void main(String[] args) {
         MazeGenerator mg = new RecursiveBacktracker();
-        Level m = new Level(mg.generate(31, 71));
+        Level level = new Level(mg.generate(8, 8));
         Scanner sc = new Scanner(System.in);
         Player p = new Player();
         while (!p.isDefeated()) {
-            System.out.println(m);
-            m.showPrompt();
+            System.out.println(level);
+            level.showPrompt();
             String input = sc.nextLine();
             if (input.isEmpty()) {
-                System.out.println("Leere Eingabe, bitte eine Richtung eingeben");
+                System.out.println("Leere Eingabe.");
+
+
+
+            //Als Option kann nun Inventar ausgewählt werden.
+            } else if (input.equals("i")){
+
+                System.out.println("Gold: "+p.getGold());
+
+                if(p.inventar.isEmpty()){
+                    System.out.println("Das Inventar ist leer.");
+                }
+
+                int anzahlSpielerItem = p.inventar.size();
+
+                for (int i = 0; i < anzahlSpielerItem; i++) {
+                    System.out.println(i+": "+p.inventar.get(i));
+                }
+                System.out.println("----------------------------------");
+
             } else {
                 char direction = input.charAt(0);
-                if (!m.canMove(direction)) {
+                if (!level.canMove(direction)) {
                     System.out.println("Ungültige Richtung");
                 } else {
-                    m.move(direction);
-                    m.handleCurrentFieldEvent(p);
+                    level.move(direction);
+                    level.handleCurrentFieldEvent(p);
                 }
+            }
+
             }
         }
     }
-}
