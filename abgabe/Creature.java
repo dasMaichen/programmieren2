@@ -1,6 +1,6 @@
-import java.util.List;
-
 /**
+ * @author Mai Kuginuki 12345678 Gruppe 6b
+ *
  * The type Character.
  */
 public class Creature {
@@ -29,22 +29,6 @@ public class Creature {
      * The constant ATTACK_SPECIAL.
      */
     public static final int ATTACK_SPECIAL = 1;
-
-
-
-
-
-    /**
-     * Inventar.
-     */
-    public Inventar inventar = new Inventar();
-
-    /**
-     * Gold das die Instanz besitzt.
-     */
-    public int gold = 0;
-
-
 
     /**
      * Instantiates a new Character.
@@ -176,15 +160,4 @@ public class Creature {
             return -1;
         }
     }
-
-    //Creature erweitert um Inventar und Gold.
-
-    public List<Item> getInventar(){
-        return inventar;
-    }
-
-    public int getGold(){
-        return gold;
-    }
-
 }
