@@ -236,20 +236,24 @@ public class Level {
      */
     public void showPrompt() {
         System.out.println("------------------------------");
+        System.out.println("Richtung? ");
         if (canMoveUp()) {
-            System.out.println("n -> Norden");
+            System.out.println("[n] Norden");
         }
         if (canMoveDown()) {
-            System.out.println("s -> Sueden");
+            System.out.println("[s] Süden");
         }
         if (canMoveRight()) {
-            System.out.println("o -> Osten");
+            System.out.println("[o] Osten");
         }
         if (canMoveLeft()) {
-            System.out.println("w -> Westen");
+            System.out.println("[w] Westen");
         }
         System.out.println("------------------------------");
-        System.out.print("Richtung? ");
+
+    //Inventar ist hinzugekommen.
+        System.out.println("[i] Inventar ansehen");
+
     }
 
     /**
@@ -396,6 +400,20 @@ public class Level {
                 System.exit(0);
             } else if (m.isDefeated()) {
                 System.out.println("Spieler gewinnt!");
+
+
+
+                //Monsteritem werden dem Spieler übertragen.
+                int anzahlMonsterItem = m.inventar.size();
+
+                for (int i = 0; i < anzahlMonsterItem; i++) {
+                    Item monsterItem = m.inventar.get(i);
+                    p.inventar.add(monsterItem);
+                }
+
+                //Mostergold werden dem Spieler übertragen.
+                p.gold = p.gold + m.getGold();
+
                 break;
             }
 
