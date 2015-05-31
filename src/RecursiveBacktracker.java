@@ -40,13 +40,13 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param offset the offset
      * @return the boolean
      */
-    private boolean validNewPosition(FieldType[][] maze, int x, int y, int[] offset) {
+    private boolean validNewPosition(Field[][] maze, int x, int y, int[] offset) {
         int newX = x + HALLWAY_OFFSET * offset[1];
         int newY = y + HALLWAY_OFFSET * offset[0];
         if (newY < 0 || newY >= maze.length || newX < 0 || newX >= maze[0].length) {
             return false;
         }
-        return maze[newY][newX] == FieldType.WALL;
+        return maze[newY][newX].getFieldType() == FieldType.WALL;
 
     }
 
@@ -55,14 +55,14 @@ public class RecursiveBacktracker implements MazeGenerator {
      *
      * @param height the height
      * @param width  the width
-     * @return the map as FieldType[][]
+     * @return the map as Field[][]
      */
-    private FieldType[][] initMaze(int height, int width) {
+    private Field[][] initMaze(int height, int width) {
         assert height % 2 == 0 && width % 2 == 0;
-        FieldType[][] map = new FieldType[height][width];
+        Field[][] map = new Field[height][width];
         for (int i = 0; i< map.length; ++i) {
             for (int j = 0; j < map[i].length; ++j) {
-                map[i][j] = FieldType.WALL;
+                map[i][j] = new Field(FieldType.WALL);
             }
         }
         return map;
@@ -76,7 +76,7 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param y the y
      * @return true, wenn sich die Koordinatem im Spielfeld befinden
      */
-    private boolean inMaze(FieldType[][] maze, int x, int y) {
+    private boolean inMaze(Field[][] maze, int x, int y) {
         return !(y < 0 ||  y >= maze.length || x < 0 || x >= maze[0].length);
     }
 
@@ -88,12 +88,12 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param y the y
      * @return the neighbors
      */
-    private int countVisitableNeighbors(FieldType[][] maze, int x, int y) {
+    private int countVisitableNeighbors(Field[][] maze, int x, int y) {
         int n = 0;
         for (int[] offset: offsets) {
             int newX = x + offset[1];
             int newY = y + offset[0];
-            if (inMaze(maze, newX, newY) && maze[newY][newX] != FieldType.WALL) {
+            if (inMaze(maze, newX, newY) && maze[newY][newX].getFieldType() != FieldType.WALL) {
                 n++;
             }
         }
@@ -105,18 +105,18 @@ public class RecursiveBacktracker implements MazeGenerator {
      *
      * @param maze the maze
      */
-    private void placeSpecialFields(FieldType[][] maze) {
+    private void placeSpecialFields(Field[][] maze) {
         for (int i = 0; i < maze.length; ++i) {
             for (int j = 0; j < maze[0].length; ++j) {
-                if (maze[i][j] == FieldType.PLAIN) {
+                if (maze[i][j].getFieldType() == FieldType.PLAIN) {
                     int neighbors = countVisitableNeighbors(maze, j, i);
                     if (neighbors >= 3) {
-                        maze[i][j] = FieldType.BATTLE;
+                        maze[i][j] = new Field(FieldType.BATTLE);
                     } else if (neighbors == 1) {
                         if (r.nextDouble() > 0.5) {
-                            maze[i][j] = FieldType.FOUNTAIN;
+                            maze[i][j] = new Field(FieldType.FOUNTAIN);
                         } else {
-                            maze[i][j] = FieldType.SMITHY;
+                            maze[i][j] = new Field(FieldType.SMITHY);
                         }
                     }  
                 }
@@ -132,16 +132,16 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @return the map as FieldType[][]
      */
     @Override
-    public FieldType[][] generate(int height, int width) {
+    public Field[][] generate(int height, int width) {
         if (height < 2 || width < 2) {
             throw new IllegalArgumentException("Non-valid maze dimensions");
         }
         goalSet = false;
-        FieldType[][] maze = initMaze(height, width);
+        Field[][] maze = initMaze(height, width);
         int startx = 2*r.nextInt(width/2)+1;
         int starty = 2*r.nextInt(height/2)+1;
         maze = generate(startx, starty,  maze);
-        maze[starty][startx] = FieldType.START;
+        maze[starty][startx] = new Field(FieldType.START);
         //maze = border(maze);
         placeSpecialFields(maze);
         return maze;
@@ -156,7 +156,7 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param offset the offset
      * @param length the length
      */
-    private void buildHallway(FieldType[][] maze, int curX, int curY, int[] offset, int length) {
+    private void buildHallway(Field[][] maze, int curX, int curY, int[] offset, int length) {
 
         for (int i = 1; i <= length; ++i) {
             
@@ -167,20 +167,20 @@ public class RecursiveBacktracker implements MazeGenerator {
                 return;
             }
             
-            maze[curY][curX] = FieldType.PLAIN;
+            maze[curY][curX] = new Field(FieldType.PLAIN);
         }
     }
 
     /**
-     * Generate FieldType [ ] [ ].
+     * Generate Field [ ] [ ].
      *
      * @param curX the cur x
      * @param curY the cur y
      * @param maze the maze
-     * @return the map as FieldType [] []
+     * @return the map as Field [] []
      */
-    private FieldType[][] generate(int curX, int curY, FieldType[][] maze) {
-        maze[curY][curX] = FieldType.PLAIN;
+    private Field[][] generate(int curX, int curY, Field[][] maze) {
+        maze[curY][curX] = new Field(FieldType.PLAIN);
         int[] validPositions = new int[offsets.length];
         int validPositionCount = offsets.length;
         for (int i = 0; i < offsets.length; ++i) {
@@ -205,7 +205,7 @@ public class RecursiveBacktracker implements MazeGenerator {
         }
         if (!goalSet && deadEnd) {
             goalSet = true;
-            maze[curY][curX] = FieldType.GOAL;
+            maze[curY][curX] = new Field(FieldType.GOAL);
         }
         return maze;
     }

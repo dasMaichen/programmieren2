@@ -7,7 +7,7 @@ public class Level {
     /**
      * The Map data.
      */
-    private FieldType[][] mapData;
+    private Field[][] mapData;
     /**
      * The Player x coordinate.
      */
@@ -22,7 +22,7 @@ public class Level {
      *
      * @param mapData the map data
      */
-    public Level(FieldType[][] mapData) {
+    public Level(Field[][] mapData) {
         if (mapData.length < 3 || mapData[0].length < 3) {
             throw new IllegalArgumentException("Invalid Map Data");
         }
@@ -40,7 +40,7 @@ public class Level {
     private boolean findStart() {
         for (int y = 0; y < mapData.length; y++) {
             for (int x = 0; x < mapData[0].length; x++) {
-                if (mapData[y][x] == FieldType.START) {
+                if (mapData[y][x].getFieldType() == FieldType.START) {
                     playerX = x;
                     playerY = y;
                     return true;
@@ -62,7 +62,7 @@ public class Level {
                 if (y == playerY && x == playerX) {
                     sb.append(FieldType.PLAYER_CHAR.getRepresentation());
                 } else {
-                    sb.append(mapData[y][x].getRepresentation());
+                    sb.append(mapData[y][x]);
                 }
             }
             sb.append("\n");
@@ -123,7 +123,7 @@ public class Level {
      */
     public boolean isWalkablePosition(int x, int y) {
         return (y >= 0) && (x >=0) && (y < mapData.length) && (x < mapData[0].length) 
-            && mapData[y][x].isWalkable();
+            && mapData[y][x].getFieldType().isWalkable();
     }
 
     /**
@@ -228,7 +228,7 @@ public class Level {
      *
      * @return the field
      */
-    public FieldType getField() {
+    public Field getField() {
         return mapData[playerY][playerX];
     }
 
@@ -236,9 +236,9 @@ public class Level {
      * Clear field.
      */
     public void clearField() {
-        FieldType field = getField();
-        if (EnumSet.of(FieldType.SMITHY, FieldType.FOUNTAIN, FieldType.BATTLE).contains(field)) {
-            mapData[playerY][playerX] = FieldType.PLAIN;
+        Field field = getField();
+        if (EnumSet.of(FieldType.SMITHY, FieldType.FOUNTAIN, FieldType.BATTLE).contains(field.getFieldType())) {
+            mapData[playerY][playerX] = new Field(FieldType.PLAIN);
         }
     }
 

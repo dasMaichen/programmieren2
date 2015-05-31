@@ -4,11 +4,11 @@
 public interface MazeGenerator {
 
     /**
-     * Generate FieldType [ ] [ ].
+     * Generate Field [ ] [ ].
      *
      * @param height the height
      * @param width  the width
-     * @return the FieldType [ ] [ ]
+     * @return the Field [ ] [ ]
      */
-    FieldType[][] generate(int height, int width);
+    Field[][] generate(int height, int width);
 }
