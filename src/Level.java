@@ -73,18 +73,18 @@ public class Level {
     /**
      * Can move.
      *
-     * @param c the direction
+     * @param direction the direction
      * @return true, wenn die Richtung möglich ist
      */
-    public boolean canMove(char c) {
-        switch (c) {
-            case 'n':
+    public boolean canMove(Direction direction) {
+        switch (direction) {
+            case NORTH:
                 return canMoveUp();
-            case 's':
+            case SOUTH:
                 return canMoveDown();
-            case 'o':
+            case EAST:
                 return canMoveRight();
-            case 'w':
+            case WEST:
                 return canMoveLeft();
             default:
                 return false;
@@ -94,20 +94,20 @@ public class Level {
     /**
      * Move void.
      *
-     * @param c the direction
+     * @param direction the direction
      */
-    public void move(char c) {
-        switch (c) {
-            case 'n':
+    public void move(Direction direction) {
+        switch (direction) {
+            case NORTH:
                 moveUp();
                 break;
-            case 's':
+            case SOUTH:
                 moveDown();
                 break;
-            case 'o':
+            case EAST:
                 moveRight();
                 break;
-            case 'w':
+            case WEST:
                 moveLeft();
                 break;
         }

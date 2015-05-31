@@ -40,13 +40,17 @@ public class Crawler {
                 System.out.println("----------------------------------");
 
             } else {
-                char direction = input.charAt(0);
-                if (!level.canMove(direction)) {
-                    System.out.println("Ungültige Richtung");
-                } else {
-                    level.move(direction);
-                    level.getField().action(p);
-                    level.clearField();
+                try {
+                    Direction direction = Direction.fromChar(input.charAt(0));
+                    if (!level.canMove(direction)) {
+                        System.out.println("Ungültige Richtung");
+                    } else {
+                        level.move(direction);
+                        level.getField().action(p);
+                        level.clearField();
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                 }
             }
 
