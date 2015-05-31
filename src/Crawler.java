@@ -45,7 +45,8 @@ public class Crawler {
                     System.out.println("Ungültige Richtung");
                 } else {
                     level.move(direction);
-                    level.handleCurrentFieldEvent(p);
+                    level.getField().action(p);
+                    level.clearField();
                 }
             }
 

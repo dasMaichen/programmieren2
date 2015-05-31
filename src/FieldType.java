@@ -11,19 +11,47 @@ public enum FieldType {
     /**
      * The constant FOUNTAIN.
      */
-    FOUNTAIN('O'),
+    FOUNTAIN('O') {
+        @Override
+        void action(Player player) {
+            player.setHp(player.getMaxHp());
+            System.out.println("Spieler wurde vollständig geheilt!");
+        }
+    },
     /**
      * The constant SMITHY.
      */
-    SMITHY('T'),
+    SMITHY('T') {
+        /**
+         * The constant ATKBONUS.
+         */
+        private static final int ATKBONUS = 10;
+
+        @Override
+        void action(Player player) {
+            player.setAtk(player.getAtk() + ATKBONUS);
+            System.out.printf("Die ATK des Spielers wurde um %d erhöht.%n", ATKBONUS);
+        }
+    },
     /**
      * The constant BATTLE.
      */
-    BATTLE('B'),
+    BATTLE('B') {
+        @Override
+        void action(Player player) {
+            Battle.start(player);
+        }
+    },
     /**
      * The constant GOAL.
      */
-    GOAL('Z'),
+    GOAL('Z') {
+        @Override
+        void action(Player player) {
+            System.out.println("Herzlichen Glückwunsch! Sie haben gewonnen!");
+            System.exit(0);
+        }
+    },
     /**
      * The constant START.
      */
@@ -42,6 +70,10 @@ public enum FieldType {
 
     private FieldType(char representation) {
         this.representation = representation;
+    }
+
+    void action(Player player) {
+
     }
 
     public char getRepresentation() {

@@ -5,10 +5,6 @@ import java.util.EnumSet;
  */
 public class Level {
     /**
-     * The constant ATKBONUS.
-     */
-    private static final int ATKBONUS = 10;
-    /**
      * The Map data.
      */
     private FieldType[][] mapData;
@@ -232,48 +228,18 @@ public class Level {
      *
      * @return the field
      */
-    private FieldType getField() {
+    public FieldType getField() {
         return mapData[playerY][playerX];
     }
 
     /**
      * Clear field.
      */
-    private void clearField() {
+    public void clearField() {
         FieldType field = getField();
         if (EnumSet.of(FieldType.SMITHY, FieldType.FOUNTAIN, FieldType.BATTLE).contains(field)) {
             mapData[playerY][playerX] = FieldType.PLAIN;
         }
-    }
-
-    /**
-     * Handle current field event.
-     *
-     * @param p the player
-     */
-    public void handleCurrentFieldEvent(Player p) {
-        FieldType field = getField();
-        switch (field) {
-            case SMITHY: {
-                p.setAtk(p.getAtk() + ATKBONUS);
-                System.out.printf("Die ATK des Spielers wurde um %d erhöht.%n", ATKBONUS);
-                break;
-            }
-            case FOUNTAIN: {
-                p.setHp(p.getMaxHp());
-                System.out.println("Spieler wurde vollständig geheilt!");
-                break;
-            }
-            case BATTLE: {
-                Battle.start(p);
-                break;
-            }
-            case GOAL: {
-                System.out.println("Herzlichen Glückwunsch! Sie haben gewonnen!");
-                System.exit(0);
-            }
-        }
-        clearField();
     }
 
 }
