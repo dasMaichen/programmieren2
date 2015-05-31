@@ -27,7 +27,11 @@ public enum FieldType {
     /**
      * The constant START.
      */
-    START('S');
+    START('S'),
+    /**
+     * The WALLCHAR.
+     */
+    WALL('#');
 
     private final char representation;
 

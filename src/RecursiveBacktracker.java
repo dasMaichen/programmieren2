@@ -40,13 +40,13 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param offset the offset
      * @return the boolean
      */
-    private boolean validNewPosition(char[][] maze, int x, int y, int[] offset) {
+    private boolean validNewPosition(FieldType[][] maze, int x, int y, int[] offset) {
         int newX = x + HALLWAY_OFFSET * offset[1];
         int newY = y + HALLWAY_OFFSET * offset[0];
         if (newY < 0 || newY >= maze.length || newX < 0 || newX >= maze[0].length) {
             return false;
         }
-        return maze[newY][newX] == WALLCHAR;
+        return maze[newY][newX] == FieldType.WALL;
 
     }
 
@@ -55,37 +55,17 @@ public class RecursiveBacktracker implements MazeGenerator {
      *
      * @param height the height
      * @param width  the width
-     * @return the map as char[][]
+     * @return the map as FieldType[][]
      */
-    private char[][] initMaze(int height, int width) {
+    private FieldType[][] initMaze(int height, int width) {
         assert height % 2 == 0 && width % 2 == 0;
-        char[][] map = new char[height][width];
+        FieldType[][] map = new FieldType[height][width];
         for (int i = 0; i< map.length; ++i) {
             for (int j = 0; j < map[i].length; ++j) {
-                map[i][j] = WALLCHAR;
+                map[i][j] = FieldType.WALL;
             }
         }
         return map;
-    }
-
-    /**
-     * Border char [ ] [ ].
-     *
-     * @param maze the maze
-     * @return the map as char[][]
-     */
-    private char[][] border(char[][] maze) {
-        char[][] borderedMaze = new char[maze.length+2][maze[0].length+2];
-        for (int i = 0; i < borderedMaze.length; ++i) {
-            for (int j = 0; j < borderedMaze[0].length; ++j) {
-                if (i == 0 || j == 0 || i == borderedMaze.length-1 || j == borderedMaze[0].length-1) {
-                    borderedMaze[i][j] = WALLCHAR;
-                } else {
-                    borderedMaze[i][j] = maze[i-1][j-1];
-                }
-            }
-        }
-        return borderedMaze;
     }
 
     /**
@@ -96,7 +76,7 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param y the y
      * @return true, wenn sich die Koordinatem im Spielfeld befinden
      */
-    private boolean inMaze(char[][] maze, int x, int y) {
+    private boolean inMaze(FieldType[][] maze, int x, int y) {
         return !(y < 0 ||  y >= maze.length || x < 0 || x >= maze[0].length);
     }
 
@@ -108,12 +88,12 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param y the y
      * @return the neighbors
      */
-    private int countVisitableNeighbors(char[][] maze, int x, int y) {
+    private int countVisitableNeighbors(FieldType[][] maze, int x, int y) {
         int n = 0;
         for (int[] offset: offsets) {
             int newX = x + offset[1];
             int newY = y + offset[0];
-            if (inMaze(maze, newX, newY) && maze[newY][newX] != WALLCHAR) {
+            if (inMaze(maze, newX, newY) && maze[newY][newX] != FieldType.WALL) {
                 n++;
             }
         }
@@ -125,18 +105,18 @@ public class RecursiveBacktracker implements MazeGenerator {
      *
      * @param maze the maze
      */
-    private void placeSpecialFields(char[][] maze) {
+    private void placeSpecialFields(FieldType[][] maze) {
         for (int i = 0; i < maze.length; ++i) {
             for (int j = 0; j < maze[0].length; ++j) {
-                if (maze[i][j] == FREECHAR) {
+                if (maze[i][j] == FieldType.PLAIN) {
                     int neighbors = countVisitableNeighbors(maze, j, i);
                     if (neighbors >= 3) {
-                        maze[i][j] = BATTLECHAR;
+                        maze[i][j] = FieldType.BATTLE;
                     } else if (neighbors == 1) {
                         if (r.nextDouble() > 0.5) {
-                            maze[i][j] = WELLCHAR;
+                            maze[i][j] = FieldType.FOUNTAIN;
                         } else {
-                            maze[i][j] = SMITHYCHAR;
+                            maze[i][j] = FieldType.SMITHY;
                         }
                     }  
                 }
@@ -145,23 +125,23 @@ public class RecursiveBacktracker implements MazeGenerator {
     }
 
     /**
-     * Generate char [ ] [ ].
+     * Generate FieldType [ ] [ ].
      *
      * @param height the height
      * @param width the width
-     * @return the map as char[][]
+     * @return the map as FieldType[][]
      */
     @Override
-    public char[][] generate(int height, int width) {
+    public FieldType[][] generate(int height, int width) {
         if (height < 2 || width < 2) {
             throw new IllegalArgumentException("Non-valid maze dimensions");
         }
         goalSet = false;
-        char[][] maze = initMaze(height, width);
+        FieldType[][] maze = initMaze(height, width);
         int startx = 2*r.nextInt(width/2)+1;
         int starty = 2*r.nextInt(height/2)+1;
         maze = generate(startx, starty,  maze);
-        maze[starty][startx] = STARTCHAR;
+        maze[starty][startx] = FieldType.START;
         //maze = border(maze);
         placeSpecialFields(maze);
         return maze;
@@ -176,7 +156,7 @@ public class RecursiveBacktracker implements MazeGenerator {
      * @param offset the offset
      * @param length the length
      */
-    private void buildHallway(char[][] maze, int curX, int curY, int[] offset, int length) {
+    private void buildHallway(FieldType[][] maze, int curX, int curY, int[] offset, int length) {
 
         for (int i = 1; i <= length; ++i) {
             
@@ -187,20 +167,20 @@ public class RecursiveBacktracker implements MazeGenerator {
                 return;
             }
             
-            maze[curY][curX] = FREECHAR;
+            maze[curY][curX] = FieldType.PLAIN;
         }
     }
 
     /**
-     * Generate char [ ] [ ].
+     * Generate FieldType [ ] [ ].
      *
      * @param curX the cur x
      * @param curY the cur y
      * @param maze the maze
-     * @return the map as char [] []
+     * @return the map as FieldType [] []
      */
-    private char[][] generate(int curX, int curY, char[][] maze) {
-        maze[curY][curX] = FREECHAR;
+    private FieldType[][] generate(int curX, int curY, FieldType[][] maze) {
+        maze[curY][curX] = FieldType.PLAIN;
         int[] validPositions = new int[offsets.length];
         int validPositionCount = offsets.length;
         for (int i = 0; i < offsets.length; ++i) {
@@ -225,7 +205,7 @@ public class RecursiveBacktracker implements MazeGenerator {
         }
         if (!goalSet && deadEnd) {
             goalSet = true;
-            maze[curY][curX] = GOALCHAR;
+            maze[curY][curX] = FieldType.GOAL;
         }
         return maze;
     }

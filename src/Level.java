@@ -1,3 +1,4 @@
+import java.util.EnumSet;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,7 @@ public class Level {
     /**
      * The Map data.
      */
-    private char[][] mapData;
+    private FieldType[][] mapData;
     /**
      * The Player x coordinate.
      */
@@ -26,7 +27,7 @@ public class Level {
      *
      * @param mapData the map data
      */
-    public Level(char[][] mapData) {
+    public Level(FieldType[][] mapData) {
         if (mapData.length < 3 || mapData[0].length < 3) {
             throw new IllegalArgumentException("Invalid Map Data");
         }
@@ -44,7 +45,7 @@ public class Level {
     private boolean findStart() {
         for (int y = 0; y < mapData.length; y++) {
             for (int x = 0; x < mapData[0].length; x++) {
-                if (mapData[y][x] == FieldType.START.getRepresentation()) {
+                if (mapData[y][x] == FieldType.START) {
                     playerX = x;
                     playerY = y;
                     return true;
@@ -66,7 +67,7 @@ public class Level {
                 if (y == playerY && x == playerX) {
                     sb.append(FieldType.PLAYER_CHAR.getRepresentation());
                 } else {
-                    sb.append(mapData[y][x]);
+                    sb.append(mapData[y][x].getRepresentation());
                 }
             }
             sb.append("\n");
@@ -127,8 +128,7 @@ public class Level {
      */
     public boolean isWalkablePosition(int x, int y) {
         return (y >= 0) && (x >=0) && (y < mapData.length) && (x < mapData[0].length) 
-            && (mapData[y][x] == FieldType.PLAIN.getRepresentation() || mapData[y][x] == FieldType.FOUNTAIN.getRepresentation() || mapData[y][x] == FieldType.SMITHY.getRepresentation()
-                || mapData[y][x] == FieldType.BATTLE.getRepresentation() || mapData[y][x] == FieldType.GOAL.getRepresentation() || mapData[y][x] == FieldType.START.getRepresentation());
+            && EnumSet.of(FieldType.PLAIN, FieldType.FOUNTAIN, FieldType.SMITHY, FieldType.BATTLE, FieldType.GOAL, FieldType.START).contains(mapData[y][x]);
     }
 
     /**
@@ -233,7 +233,7 @@ public class Level {
      *
      * @return the field
      */
-    private char getField() {
+    private FieldType getField() {
         return mapData[playerY][playerX];
     }
 
@@ -241,9 +241,9 @@ public class Level {
      * Clear field.
      */
     private void clearField() {
-        char field = getField();
-        if (field == FieldType.SMITHY.getRepresentation() || field == FieldType.FOUNTAIN.getRepresentation() || field == FieldType.BATTLE.getRepresentation()) {
-            mapData[playerY][playerX] = FieldType.PLAIN.getRepresentation();
+        FieldType field = getField();
+        if (EnumSet.of(FieldType.SMITHY, FieldType.FOUNTAIN, FieldType.BATTLE).contains(field)) {
+            mapData[playerY][playerX] = FieldType.PLAIN;
         }
     }
 
@@ -253,18 +253,26 @@ public class Level {
      * @param p the player
      */
     public void handleCurrentFieldEvent(Player p) {
-        char field = getField();
-        if (field == FieldType.SMITHY.getRepresentation()) {
-            p.setAtk(p.getAtk() + ATKBONUS);
-            System.out.printf("Die ATK des Spielers wurde um %d erhöht.%n", ATKBONUS);
-        } else if (field == FieldType.FOUNTAIN.getRepresentation()) {
-            p.setHp(p.getMaxHp());
-            System.out.println("Spieler wurde vollständig geheilt!");
-        } else if(field == FieldType.BATTLE.getRepresentation()) {
-            startBattle(p);
-        } else if(field == FieldType.GOAL.getRepresentation()) {
-            System.out.println("Herzlichen Glückwunsch! Sie haben gewonnen!");
-            System.exit(0);
+        FieldType field = getField();
+        switch (field) {
+            case SMITHY: {
+                p.setAtk(p.getAtk() + ATKBONUS);
+                System.out.printf("Die ATK des Spielers wurde um %d erhöht.%n", ATKBONUS);
+                break;
+            }
+            case FOUNTAIN: {
+                p.setHp(p.getMaxHp());
+                System.out.println("Spieler wurde vollständig geheilt!");
+                break;
+            }
+            case BATTLE: {
+                startBattle(p);
+                break;
+            }
+            case GOAL: {
+                System.out.println("Herzlichen Glückwunsch! Sie haben gewonnen!");
+                System.exit(0);
+            }
         }
         clearField();
     }

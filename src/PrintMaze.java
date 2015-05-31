@@ -7,10 +7,10 @@ public class PrintMaze {
      *
      * @param map the map
      */
-    public static void printMaze(char[][] map) {
-        for (char[] ca : map) {
-            for (char c : ca) {
-                System.out.print(c);
+    public static void printMaze(FieldType[][] map) {
+        for (FieldType[] row : map) {
+            for (FieldType field : row) {
+                System.out.print(field.getRepresentation());
             }
             System.out.println();
         }
@@ -23,7 +23,7 @@ public class PrintMaze {
      */
     public static void main(String[] args) {
         MazeGenerator gen = new RecursiveBacktracker();
-        char[][] map = gen.generate(25,31);
+        FieldType[][] map = gen.generate(25,31);
         printMaze(map);
         System.out.println();
     }
