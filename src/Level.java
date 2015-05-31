@@ -128,7 +128,7 @@ public class Level {
      */
     public boolean isWalkablePosition(int x, int y) {
         return (y >= 0) && (x >=0) && (y < mapData.length) && (x < mapData[0].length) 
-            && EnumSet.of(FieldType.PLAIN, FieldType.FOUNTAIN, FieldType.SMITHY, FieldType.BATTLE, FieldType.GOAL, FieldType.START).contains(mapData[y][x]);
+            && mapData[y][x].isWalkable();
     }
 
     /**

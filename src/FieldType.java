@@ -31,7 +31,12 @@ public enum FieldType {
     /**
      * The WALLCHAR.
      */
-    WALL('#');
+    WALL('#') {
+        @Override
+        public boolean isWalkable() {
+            return false;
+        }
+    };
 
     private final char representation;
 
@@ -41,5 +46,9 @@ public enum FieldType {
 
     public char getRepresentation() {
         return representation;
+    }
+
+    public boolean isWalkable() {
+        return true;
     }
 }
