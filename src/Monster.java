@@ -55,7 +55,7 @@ public class Monster extends Creature {
         this.name = name;
 
         Random generator = new Random();
-        this.gold = generator.nextInt(101);
+        this.setGold(generator.nextInt(101));
 
         int anzahlZufaelligerItems = generator.nextInt(5);
         for (int i = 0; i < anzahlZufaelligerItems; i++) {
