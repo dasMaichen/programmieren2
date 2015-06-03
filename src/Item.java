@@ -109,7 +109,17 @@ public class Item implements Comparable<Item> {
         }else{
             return false;
         }
-
-
     }
+    public int getVerkaufswert(){
+        return this.verkaufswert;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+
+
 }
+
+
