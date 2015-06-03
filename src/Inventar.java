@@ -52,6 +52,63 @@ public class Inventar implements List<Item>{
     }
 
 
+//
+//
+//    @Override
+//    public boolean add(Item item) {
+//        Inventarknoten neuerKnoten = new Inventarknoten(item);
+//
+//        if (ersterKnoten == null) {
+//            ersterKnoten = neuerKnoten;
+//        }else {
+//
+//            Inventarknoten aktuellerKnoten = ersterKnoten;
+//            Inventarknoten vorgaengerKnoten = null;
+//
+//
+//            int ergebnis = item.compareTo(aktuellerKnoten.getItem());
+//
+//
+//            if(ergebnis < 0) {
+//                neuerKnoten.setNachfolger(ersterKnoten);
+//                neuerKnoten = ersterKnoten;
+//
+//                groesse = groesse+1;
+//
+//                return true;
+//            }
+//
+//
+//
+//            while (ergebnis >=0){
+//
+//                if(aktuellerKnoten.getNachfolger() == null){
+//                    aktuellerKnoten.setNachfolger(neuerKnoten);
+//
+//                    groesse=groesse+1;
+//                return true;
+//                }
+//
+//                vorgaengerKnoten = aktuellerKnoten;
+//                aktuellerKnoten = aktuellerKnoten.getNachfolger();
+//
+//                ergebnis = item.compareTo(aktuellerKnoten.getItem());
+//            }
+//
+//            if (ergebnis < 0){
+//                if (vorgaengerKnoten != null) {
+//                    neuerKnoten.setNachfolger(aktuellerKnoten);
+//                    vorgaengerKnoten.setNachfolger(neuerKnoten);
+//                }
+//
+//            }
+//        }
+//        groesse = groesse+1;
+//
+//        return true;
+//    }
+
+
     /**
      * gibt den Knoten an der gesuchten Position aus.
      */
@@ -110,6 +167,77 @@ public class Inventar implements List<Item>{
         }
     }
 
+    /**
+     *
+     * @param zuLoeschendesItem das Item, welches ich loeschen moechte.
+     * @return boolean, ob Item geloescht wurde.
+     *
+     * Diese Methode löscht Items aus dem Inventar.
+     */
+
+
+    public boolean remove(Item zuLoeschendesItem) {
+
+        Inventarknoten zuLoeschenderKnoten = ersterKnoten;
+        Inventarknoten vorgänger = null;
+
+        for (int i = 0; i < groesse; i++) {
+
+            if(zuLoeschenderKnoten.getItem().equals(zuLoeschendesItem)){
+                if(vorgänger==null){
+                    ersterKnoten = ersterKnoten.getNachfolger();
+                }else {
+                    vorgänger.setNachfolger(zuLoeschenderKnoten.getNachfolger());
+                }
+
+                groesse = groesse-1;
+                return true;
+
+            }else {
+                vorgänger = zuLoeschenderKnoten;
+                zuLoeschenderKnoten = zuLoeschenderKnoten.getNachfolger();
+            }
+
+
+
+//            if(!zuLoeschenderKnoten.getItem().equals(zuLoeschendesItem)){
+//                vorgänger = zuLoeschenderKnoten;
+//                zuLoeschenderKnoten = zuLoeschenderKnoten.getNachfolger();
+//            }else {
+//                if(vorgänger==null){
+//                    ersterKnoten = ersterKnoten.getNachfolger();
+//                }else {
+//                    vorgänger.setNachfolger(zuLoeschenderKnoten.getNachfolger());
+//                }
+//            }
+        }      return false;
+    }
+
+
+
+    @Override
+    public Item set(int i, Item item) {
+        throw new UnsupportedOperationException("geht nicht!");
+    }
+
+
+
+
+
+    @Override
+    public boolean remove(Object o) {
+        throw new UnsupportedOperationException("geht nicht!");
+    }
+
+
+
+
+
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("geht nicht!");
+    }
 
 
 
@@ -141,10 +269,7 @@ public class Inventar implements List<Item>{
 
 
 
-    @Override
-    public boolean remove(Object o) {
-        throw new UnsupportedOperationException("geht nicht!");
-    }
+
 
     @Override
     public boolean containsAll(Collection<?> collection) {
@@ -171,17 +296,11 @@ public class Inventar implements List<Item>{
         throw new UnsupportedOperationException("geht nicht!");
     }
 
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("geht nicht!");
-    }
 
 
 
-    @Override
-    public Item set(int i, Item item) {
-        throw new UnsupportedOperationException("geht nicht!");
-    }
+
+
 
     @Override
     public void add(int i, Item item) {
