@@ -102,6 +102,7 @@ public class RecursiveBacktracker implements MazeGenerator {
 
     /**
      * Place special fields.
+     * Jetzt neu: statt chars Instanzen von Fieldtype.
      *
      * @param maze the maze
      */
@@ -113,10 +114,19 @@ public class RecursiveBacktracker implements MazeGenerator {
                     if (neighbors >= 3) {
                         maze[i][j] = new Field(FieldType.BATTLE);
                     } else if (neighbors == 1) {
-                        if (r.nextDouble() > 0.5) {
+                        if (r.nextDouble() < 0.3) {
                             maze[i][j] = new Field(FieldType.FOUNTAIN);
-                        } else {
+                        } else if (r.nextDouble() >= 0.3 && r.nextDouble() < 0.6) {
                             maze[i][j] = new Field(FieldType.SMITHY);
+                        } else{
+                            maze[i][j] = new Field(FieldType.HAENDLER) {
+                                Haendler haendler = new Haendler();
+
+                                @Override
+                                public void action(Player player) {
+                                    Haendler.handeln(player, haendler);
+                                }
+                            };
                         }
                     }  
                 }
@@ -138,14 +148,46 @@ public class RecursiveBacktracker implements MazeGenerator {
         }
         goalSet = false;
         Field[][] maze = initMaze(height, width);
-        int startx = 2*r.nextInt(width/2)+1;
-        int starty = 2*r.nextInt(height/2)+1;
-        maze = generate(startx, starty,  maze);
+        int startx = 2 * r.nextInt(width / 2) + 1;
+        int starty = 2 * r.nextInt(height / 2) + 1;
+        maze = generate(startx, starty, maze);
         maze[starty][startx] = new Field(FieldType.START);
+
+
+        //Setze Questgeber.
+        int questgeberx = 2*r.nextInt(width/2)+1;
+        int questgebery = 2*r.nextInt(height/2)+1;
+        maze = generate(questgeberx, questgebery,  maze);
+        maze[questgebery][questgeberx] = new Field(FieldType.QUESTGEBER);
         //maze = border(maze);
         placeSpecialFields(maze);
+
+
+        int hx = 2*r.nextInt(width/2)+1;
+        int hy = 2*r.nextInt(height/2)+1;
+        maze = generate(hx, hy,  maze);
+        maze[hy][hx] = new Field(FieldType.HAENDLER);
+        //maze = border(maze);
+        placeSpecialFields(maze);
+
+
+        int hx2 = 2*r.nextInt(width/2)+1;
+        int hy2 = 2*r.nextInt(height/2)+1;
+        maze = generate(hx2, hy2,  maze);
+        maze[hy2][hx2] = new Field(FieldType.HAENDLER);
+        //maze = border(maze);
+        placeSpecialFields(maze);
+
+
+
+
         return maze;
+
+
+
     }
+
+
 
     /**
      * Build hallway.
