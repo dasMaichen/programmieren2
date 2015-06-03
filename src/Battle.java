@@ -87,7 +87,7 @@ public class Battle {
                 }
 
                 //Mostergold werden dem Spieler übertragen.
-                p.gold = p.gold + m.getGold();
+                p.setGold(p.getGold() + m.getGold());
 
                 break;
             }
