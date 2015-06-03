@@ -42,7 +42,7 @@ public class Creature {
     /**
      * Gold das die Instanz besitzt.
      */
-    public int gold = 0;
+    private int gold = 0;
 
 
 
@@ -185,6 +185,10 @@ public class Creature {
 
     public int getGold(){
         return gold;
+    }
+
+    public void setGold(int neuerGoldwert){
+        gold = neuerGoldwert;
     }
 
 }
