@@ -11,7 +11,7 @@ public class Crawler {
      */
     public static void main(String[] args) {
         MazeGenerator mg = new RecursiveBacktracker();
-        Level level = new Level(mg.generate(8, 8));
+        Level level = new Level(mg.generate(8,16 ));
         Scanner sc = new Scanner(System.in);
         Player p = new Player();
         while (!p.isDefeated()) {
