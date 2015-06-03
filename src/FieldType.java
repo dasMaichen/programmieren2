@@ -64,6 +64,24 @@ public enum FieldType {
         public boolean isWalkable() {
             return false;
         }
+    },
+
+    QUESTGEBER('Q'){
+        @Override
+        void action(Player player){
+        throw new UnsupportedOperationException();
+        }
+    },
+    /**
+     * Konstante Haendler.
+     */
+    HAENDLER('H') {
+        @Override
+        void action(Player player) {
+
+            //throw new UnsupportedOperationException();
+            System.out.println("hallo");
+        }
     };
 
     private final char representation;
