@@ -69,7 +69,7 @@ public enum FieldType {
     QUESTGEBER('Q'){
         @Override
         void action(Player player){
-        throw new UnsupportedOperationException();
+        System.out.println("Huhu! Ich habe noch nichts für dich.");
         }
     },
     /**
@@ -77,10 +77,9 @@ public enum FieldType {
      */
     HAENDLER('H') {
         @Override
-        void action(Player player) {
-
-            //throw new UnsupportedOperationException();
-            System.out.println("hallo");
+        public void action(Player player) {
+            Haendler haendler = new Haendler();
+            Haendler.handeln(player,haendler);
         }
     };
 
