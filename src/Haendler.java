@@ -15,9 +15,12 @@ public class Haendler {
      * Get-Methode
      * @return inventar
      */
-    public List<Item> getInventar() {
+    public Inventar getInventar() {
         return inventar;
     }
+
+
+
 
     /**
      * Haendler Konstruktor. Haendler bekommt random Items in seinem Inventar.
@@ -27,9 +30,10 @@ public class Haendler {
         Random generator = new Random();
 
         int anzahlZufaelligerItems = 1+generator.nextInt(7);
+
         for (int i = 0; i < anzahlZufaelligerItems; i++) {
-            Item item = new Item();
-            this.inventar.add(item);
+            int j = generator.nextInt(Items.VERFUEGBARE_ITEMS.size()-1);
+            this.inventar.add(Items.VERFUEGBARE_ITEMS.get(j));
         }
     }
 
@@ -129,7 +133,7 @@ public class Haendler {
                             for (int j = 0; j < anzahlHaendlerItem; j++) {
 
                                 if (auswahl == j) {
-                                    haendler.verkaufen(haendler.inventar.get(j), player);
+                                    haendler.verkaufen((Item) haendler.inventar.get(j), player);
                                 }
                             }
                         }else {
@@ -170,7 +174,7 @@ public class Haendler {
                                 for (int j = 0; j < anzahlSpielerItem; j++) {
 
                                     if (auswahlIntegerVerkauf == j) {
-                                        haendler.kaufen(player.inventar.get(j), player);
+                                        haendler.kaufen((Item) player.inventar.get(j), player);
                                     }
                                 }
                             } else {

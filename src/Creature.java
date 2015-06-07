@@ -179,7 +179,7 @@ public class Creature {
 
     //Creature erweitert um Inventar und Gold.
 
-    public List<Item> getInventar(){
+    public Inventar getInventar(){
         return inventar;
     }
 

@@ -82,7 +82,7 @@ public class Battle {
                 int anzahlMonsterItem = m.inventar.size();
 
                 for (int i = 0; i < anzahlMonsterItem; i++) {
-                    Item monsterItem = m.inventar.get(i);
+                    Item monsterItem = (Item) m.inventar.get(i);
                     p.inventar.add(monsterItem);
                 }
 

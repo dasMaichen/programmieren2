@@ -220,6 +220,7 @@ public class Level {
 
     //Inventar ist hinzugekommen.
         System.out.println("[i] Inventar ansehen");
+        System.out.println("[l] Questlog ansehen");
 
     }
 
@@ -237,7 +238,7 @@ public class Level {
      */
     public void clearField() {
         Field field = getField();
-        if (EnumSet.of(FieldType.SMITHY, FieldType.FOUNTAIN, FieldType.BATTLE).contains(field.getFieldType())) {
+        if (EnumSet.of(FieldType.SMITHY).contains(field.getFieldType())) {
             mapData[playerY][playerX] = new Field(FieldType.PLAIN);
         }
     }

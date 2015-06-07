@@ -121,11 +121,6 @@ public class RecursiveBacktracker implements MazeGenerator {
                         } else{
                             maze[i][j] = new Field(FieldType.HAENDLER) {
                                 Haendler haendler = new Haendler();
-
-                                @Override
-                                public void action(Player player) {
-                                    Haendler.handeln(player, haendler);
-                                }
                             };
                         }
                     }  

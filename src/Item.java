@@ -50,21 +50,22 @@ public class Item implements Comparable<Item> {
 
     //Ein nicht ganz so sinnvoller Konstruktor.
 
-    public Item() {
+//    public Item() {
+//
+//        Random generator = new Random();
+//
+//        this.name = "";
+//
+//        //hier wird über eine for-Schleife zufällige Buchstaben aneinander gereiht.
+//        for (int i = 0; i < 7; i++) {
+//            this.name += (char) ('a' + generator.nextInt('z' - 'a'));
+//        }
+//
+//        //Random Verkaufswert und Gewicht werden gesetzt.
+//        this.verkaufswert = generator.nextInt(101);
+//        this.gewicht = generator.nextInt(10001);
+//    }
 
-        Random generator = new Random();
-
-        this.name = "";
-
-        //hier wird über eine for-Schleife zufällige Buchstaben aneinander gereiht.
-        for (int i = 0; i < 7; i++) {
-            this.name += (char) ('a' + generator.nextInt('z' - 'a'));
-        }
-
-        //Random Verkaufswert und Gewicht werden gesetzt.
-        this.verkaufswert = generator.nextInt(101);
-        this.gewicht = generator.nextInt(10001);
-    }
 
 
     public String toString() {

@@ -39,6 +39,19 @@ public class Crawler {
                 }
                 System.out.println("----------------------------------");
 
+            } else if(input.equals("l")){
+                System.out.println("Deine Quest:");
+
+                if(p.questlog.isEmpty()){
+                    System.out.println("Du hast in Moment keine Quests.");
+                }
+
+                int anzahlSpielerQuests = p.questlog.size();
+
+                for (int i = 0; i < anzahlSpielerQuests; i++) {
+                    System.out.println(i+": "+p.questlog.get(i));
+                }
+                System.out.println("----------------------------------");
             } else {
                 try {
                     Direction direction = Direction.fromChar(input.charAt(0));

@@ -59,8 +59,8 @@ public class Monster extends Creature {
 
         int anzahlZufaelligerItems = generator.nextInt(5);
         for (int i = 0; i < anzahlZufaelligerItems; i++) {
-            Item item = new Item();
-            inventar.add(item);
+            int j = generator.nextInt(Items.VERFUEGBARE_ITEMS.size()-1);
+            inventar.add(Items.VERFUEGBARE_ITEMS.get(j));
         }
 
 

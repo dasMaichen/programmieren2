@@ -69,7 +69,10 @@ public enum FieldType {
     QUESTGEBER('Q'){
         @Override
         void action(Player player){
-        System.out.println("Huhu! Ich habe noch nichts für dich.");
+            Questgeber questgeber = new Questgeber();
+            questgeber.questsVerwalten(player,questgeber);
+
+            System.out.println("Huhu! Ich habe noch nichts für dich.");
         }
     },
     /**

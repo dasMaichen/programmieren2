@@ -8,32 +8,25 @@ import java.nio.file.Paths;
 /**
  * Created by mai on 03.06.15.
  */
-public class CsvReader {
+public class CsvReader<T> {
 
-    public <T> T[] einlesen(String dateiname, Class<T> ausgabetyp) throws IOException {
+    private final Class<T> ausgabetyp;
+
+    public CsvReader(Class<T> ausgabetyp){
+        this.ausgabetyp = ausgabetyp;
+    }
+
+    public Liste<T> einlesen(String dateiname) throws IOException {
 
         BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(dateiname),
                 Charset.defaultCharset());
 
         String line = null;
 
-        int arrayGroesse = 0;
-
-        while (bufferedReader.readLine() != null) {
-
-            arrayGroesse = arrayGroesse+1;
-        }
-
-        bufferedReader.close();
-
-
-        bufferedReader = Files.newBufferedReader(Paths.get(dateiname),
-                Charset.defaultCharset());
-
         bufferedReader.readLine();
 
-        int i = 0;
-        T[] arrayMitDingen = (T[]) Array.newInstance(ausgabetyp, arrayGroesse - 1);
+
+        Liste<T> listeVonDingen =  new Liste<T>();
 
         while ((line = bufferedReader.readLine()) != null) {
 
@@ -41,27 +34,26 @@ public class CsvReader {
 
 
             if(ausgabetyp.equals(Item.class)){
-                int verkaufswert = Integer.parseInt(werte[1]);
+                int verkaufswert = (int)Double.parseDouble(werte[1]);
 
-                int gewicht = Integer.parseInt(werte[2]);
+                int gewicht = (int)Double.parseDouble(werte[2]);
 
                 Item item = new Item(werte[0],verkaufswert,gewicht);
 
-                arrayMitDingen[i]= (T) item;
-                i++;
+                listeVonDingen.add((T) item);
 
 
             }else if (ausgabetyp.equals(Quest.class)){
 
                 int anzahl = Integer.parseInt(werte[3]);
 
-                Quest quest = new Quest(werte[0], werte[1], werte[2], anzahl, false);
+                Quest quest = new Quest(werte[0], werte[1], werte[2], anzahl, false, false);
 
-                arrayMitDingen[i]= (T) quest;
-                i++;
+               listeVonDingen.add((T) quest);
+
             }
 
-        }return arrayMitDingen;
+        }return listeVonDingen;
     }
 
 }

@@ -41,6 +41,7 @@ public class Player extends Creature {
      */
     public static final int REROLL_COST = 35;
 
+
     /**
      * Instantiates a new Player.
      */
@@ -80,6 +81,9 @@ public class Player extends Creature {
         this.ap = maxAp;
         this.apRegen = apRegen;
     }
+
+
+    public Questlog questlog = new Questlog();
 
     /**
      * Gets remaining item uses.
@@ -188,6 +192,10 @@ public class Player extends Creature {
             setAtk((int) (Math.random() * 2 * this.getAtk()));
             return true;
         }
+    }
+
+    public Questlog getQuestlog(){
+        return questlog;
     }
 
 }
