@@ -61,12 +61,12 @@ public class AvlBaumTest {
             testBaum.add(i);
         }
 
-        Baumknoten<Integer> knoten = testBaum.sucheMinimum();
+        Listenknoten<Integer> knoten = testBaum.getMinimum();
 
         for (int i = 0; i < 10; i++) {
             //System.out.println(knoten.getElement());
             Assert.assertEquals(i, (int) knoten.getElement());
-            knoten = knoten.getNachfolgerknoten();
+            knoten = knoten.getNachfolger();
 
         }
 

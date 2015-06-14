@@ -1,13 +1,11 @@
 /**
  * Created by Mai Kuginuki on 14.06.2015.
  */
-public class Baumknoten<T extends Comparable<T>> implements Comparable<Baumknoten<T>>{
+public class Baumknoten<T extends Comparable<T>> extends Listenknoten<T> implements Comparable<Baumknoten<T>>{
 
-    private final T element;
     private Baumknoten<T> linkesKind;
     private Baumknoten<T> rechtesKind;
-    private Baumknoten<T> nachfolgerknoten;
-    private Baumknoten<T> vorgaengerknoten;
+
 
     /**
      *
@@ -15,10 +13,7 @@ public class Baumknoten<T extends Comparable<T>> implements Comparable<Baumknote
      *
      */
     public Baumknoten(T element) {
-        if(element == null){
-            throw new NullPointerException();
-        }
-        this.element = element;
+        super(element);
     }
 
     /**
@@ -53,13 +48,6 @@ public class Baumknoten<T extends Comparable<T>> implements Comparable<Baumknote
         return this.rechtesKind;
     }
 
-    /**
-     * Getter-Methode fuer das Element des Knotens.
-     * @return das Element (Item oder Quest).
-     */
-    public T getElement() {
-        return this.element;
-    }
 
     /**
      * vergleicht das Element der Baumknoten miteinander.
@@ -72,24 +60,6 @@ public class Baumknoten<T extends Comparable<T>> implements Comparable<Baumknote
         return ergebnis;
     }
 
-    @Override
-    public String toString() {
-        return element.toString();
-    }
 
-    public Baumknoten<T> getNachfolgerknoten() {
-        return nachfolgerknoten;
-    }
 
-    public void setNachfolgerknoten(Baumknoten<T> nachfolgerknoten) {
-        this.nachfolgerknoten = nachfolgerknoten;
-    }
-
-    public Baumknoten<T> getVorgaengerknoten() {
-        return vorgaengerknoten;
-    }
-
-    public void setVorgaengerknoten(Baumknoten<T> vorgaengerknoten) {
-        this.vorgaengerknoten = vorgaengerknoten;
-    }
 }

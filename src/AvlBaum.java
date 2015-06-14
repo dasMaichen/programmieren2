@@ -11,6 +11,8 @@ public class AvlBaum<T extends Comparable<T>> implements List<T> {
     private Baumknoten<T> wurzelknoten;
     private int groesse;
 
+    private final DoppeltVerketteteListe<T> sortierteListe = new DoppeltVerketteteListe<>();
+
 
     Baumknoten<T> getWurzelknoten() {
         return wurzelknoten;
@@ -50,10 +52,14 @@ public class AvlBaum<T extends Comparable<T>> implements List<T> {
         throw new UnsupportedOperationException("geht nicht!");
     }
 
+
+
+
     void add(Baumknoten<T> elementknoten){
 
         if(this.isEmpty()){
             wurzelknoten = elementknoten;
+            sortierteListe.add(elementknoten);
 
         }else {
             Baumknoten<T> elternknoten = sucheElternknoten(elementknoten);
@@ -61,23 +67,13 @@ public class AvlBaum<T extends Comparable<T>> implements List<T> {
 
             if(ergebnis>=0){
                 elternknoten.setRechtesKind(elementknoten);
-                elementknoten.setVorgaengerknoten(elternknoten);
-                elementknoten.setNachfolgerknoten(elternknoten.getNachfolgerknoten());
 
-                elternknoten.setNachfolgerknoten(elementknoten);
-                if(elementknoten.getNachfolgerknoten() != null){
-                    elementknoten.getNachfolgerknoten().setVorgaengerknoten(elementknoten);
-                }
+                sortierteListe.add(elementknoten,elternknoten);
+
             }else {
                 elternknoten.setLinkesKind(elementknoten);
-                elementknoten.setNachfolgerknoten(elternknoten);
-                elementknoten.setVorgaengerknoten(elternknoten.getVorgaengerknoten());
 
-                elternknoten.setVorgaengerknoten(elementknoten);
-                if(elementknoten.getVorgaengerknoten()!= null){
-                    elementknoten.getVorgaengerknoten().setNachfolgerknoten(elementknoten);
-                }
-
+                sortierteListe.add(elementknoten,elternknoten.getVorgaenger());
             }
         }
 
@@ -118,18 +114,16 @@ public class AvlBaum<T extends Comparable<T>> implements List<T> {
     }
 
 
-    Baumknoten<T> sucheMinimum(){
-        Baumknoten<T> minimunknoten = wurzelknoten;
-
-        while (minimunknoten.getVorgaengerknoten() != null){
-            minimunknoten = minimunknoten.getVorgaengerknoten();
-        }
-        return minimunknoten;
+    Listenknoten<T> getMinimum(){
+        return sortierteListe.getErsterKnoten();
     }
 
 
     @Override
     public boolean remove(Object o) {
+
+
+
         return false;
     }
 
