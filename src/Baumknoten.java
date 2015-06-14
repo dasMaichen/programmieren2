@@ -6,6 +6,8 @@ public class Baumknoten<T extends Comparable<T>> implements Comparable<Baumknote
     private final T element;
     private Baumknoten<T> linkesKind;
     private Baumknoten<T> rechtesKind;
+    private Baumknoten<T> nachfolgerknoten;
+    private Baumknoten<T> vorgaengerknoten;
 
     /**
      *
@@ -70,9 +72,24 @@ public class Baumknoten<T extends Comparable<T>> implements Comparable<Baumknote
         return ergebnis;
     }
 
-
     @Override
     public String toString() {
         return element.toString();
+    }
+
+    public Baumknoten<T> getNachfolgerknoten() {
+        return nachfolgerknoten;
+    }
+
+    public void setNachfolgerknoten(Baumknoten<T> nachfolgerknoten) {
+        this.nachfolgerknoten = nachfolgerknoten;
+    }
+
+    public Baumknoten<T> getVorgaengerknoten() {
+        return vorgaengerknoten;
+    }
+
+    public void setVorgaengerknoten(Baumknoten<T> vorgaengerknoten) {
+        this.vorgaengerknoten = vorgaengerknoten;
     }
 }

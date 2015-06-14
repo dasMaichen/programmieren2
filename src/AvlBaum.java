@@ -61,8 +61,23 @@ public class AvlBaum<T extends Comparable<T>> implements List<T> {
 
             if(ergebnis>=0){
                 elternknoten.setRechtesKind(elementknoten);
+                elementknoten.setVorgaengerknoten(elternknoten);
+                elementknoten.setNachfolgerknoten(elternknoten.getNachfolgerknoten());
+
+                elternknoten.setNachfolgerknoten(elementknoten);
+                if(elementknoten.getNachfolgerknoten() != null){
+                    elementknoten.getNachfolgerknoten().setVorgaengerknoten(elementknoten);
+                }
             }else {
                 elternknoten.setLinkesKind(elementknoten);
+                elementknoten.setNachfolgerknoten(elternknoten);
+                elementknoten.setVorgaengerknoten(elternknoten.getVorgaengerknoten());
+
+                elternknoten.setVorgaengerknoten(elementknoten);
+                if(elementknoten.getVorgaengerknoten()!= null){
+                    elementknoten.getVorgaengerknoten().setNachfolgerknoten(elementknoten);
+                }
+
             }
         }
 
@@ -100,6 +115,16 @@ public class AvlBaum<T extends Comparable<T>> implements List<T> {
                 potentiellerElternteil = aktuellerElternteil;
             }
         }return null;
+    }
+
+
+    Baumknoten<T> sucheMinimum(){
+        Baumknoten<T> minimunknoten = wurzelknoten;
+
+        while (minimunknoten.getVorgaengerknoten() != null){
+            minimunknoten = minimunknoten.getVorgaengerknoten();
+        }
+        return minimunknoten;
     }
 
 

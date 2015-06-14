@@ -52,7 +52,24 @@ public class AvlBaumTest {
 
         Baumknoten<Integer> knoten3 = new Baumknoten<>(7);
         Assert.assertEquals(knoten2, testBaum.sucheElternknoten(knoten3));
+    }
 
+    @Test
+    public void vorgaengerNachfolgerTest(){
+
+        for (int i = 0; i < 10; i++) {
+            testBaum.add(i);
+        }
+
+        Baumknoten<Integer> knoten = testBaum.sucheMinimum();
+
+        for (int i = 0; i < 10; i++) {
+            //System.out.println(knoten.getElement());
+            Assert.assertEquals(i, (int) knoten.getElement());
+            knoten = knoten.getNachfolgerknoten();
+
+        }
 
     }
+
 }
