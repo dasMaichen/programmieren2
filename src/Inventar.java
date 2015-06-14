@@ -2,7 +2,7 @@
 /**
  * Created by mai on 14.05.15.
  */
-public class Inventar extends Liste<Item>{
+public class Inventar extends DoppeltVerketteteListe<Item>{
 
     /**
      * Eine leere Liste wird produziert.

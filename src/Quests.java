@@ -5,14 +5,14 @@ import java.io.IOException;
  */
 public class Quests {
 
-    public static final Liste<Quest> VERFUEGBARE_QUESTS = questsEinlesen();
+    public static final DoppeltVerketteteListe<Quest> VERFUEGBARE_QUESTS = questsEinlesen();
 
-    private static Liste<Quest> questsEinlesen() {
+    private static DoppeltVerketteteListe<Quest> questsEinlesen() {
 
         CsvReader<Quest> reader = new CsvReader<Quest>(Quest.class);
 
         try {
-            Liste<Quest> listeVonQuests = reader.einlesen("quest.csv");
+            DoppeltVerketteteListe<Quest> listeVonQuests = reader.einlesen("quest.csv");
 
             return listeVonQuests;
 

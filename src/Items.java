@@ -5,14 +5,14 @@ import java.io.IOException;
  */
 public class Items {
 
-    public static final Liste<Item> VERFUEGBARE_ITEMS = itemsEinlesen();
+    public static final DoppeltVerketteteListe<Item> VERFUEGBARE_ITEMS = itemsEinlesen();
 
-    private static Liste<Item> itemsEinlesen() {
+    private static DoppeltVerketteteListe<Item> itemsEinlesen() {
 
         CsvReader<Item> reader = new CsvReader<Item>(Item.class);
 
         try {
-            Liste<Item> listeVonItems = reader.einlesen("item.csv");
+            DoppeltVerketteteListe<Item> listeVonItems = reader.einlesen("item.csv");
 
             return listeVonItems;
 

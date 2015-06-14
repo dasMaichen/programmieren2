@@ -16,7 +16,7 @@ public class CsvReader<T> {
         this.ausgabetyp = ausgabetyp;
     }
 
-    public Liste<T> einlesen(String dateiname) throws IOException {
+    public DoppeltVerketteteListe<T> einlesen(String dateiname) throws IOException {
 
         BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(dateiname),
                 Charset.defaultCharset());
@@ -26,7 +26,7 @@ public class CsvReader<T> {
         bufferedReader.readLine();
 
 
-        Liste<T> listeVonDingen =  new Liste<T>();
+        DoppeltVerketteteListe<T> listeVonDingen =  new DoppeltVerketteteListe<>();
 
         while ((line = bufferedReader.readLine()) != null) {
 
