@@ -1,45 +1,32 @@
-import java.util.Random;
+import java.io.Serializable;
 
 /**
  * Created by dasMaichen on 14.05.15.
+ * die Klasse Item
  */
+public class Item implements Comparable<Item>, Serializable {
 
 
-/*Die Lösung ohne Einschränkung wäre so:
-
-    public class Item implements Comparable {
-
-    [...]
-
-    dann müsste man bei der Methode comparable:
-
-     public int compareTo(Object anderesObjekt) {
-        Item anderesItem = (Item) anderesObjekt;
-
-            --> ist kein Item wird Exception geworfen (ClassCastException).
-
-     [...]
-
-       }
-     }
-  */
-
-
-
-public class Item implements Comparable<Item> {
-
-
+    /**
+     * Name des Items
+     */
     private String name;
+    /**
+     * Verkaufswert des Items
+     */
     private Integer verkaufswert;
+    /**
+     * Gewicht des Items
+     */
     private Integer gewicht;
 
 
     /**
      * Ein sinnvoller Konstruktor.
      *
-     * @param name
-     * @param verkaufswert
-     * @param gewicht
+     * @param name Name des Items
+     * @param verkaufswert Verkaufswert des Items
+     * @param gewicht Gewicht des Items
      */
     public Item(String name, int verkaufswert, int gewicht) {
         this.name = name;
@@ -67,7 +54,7 @@ public class Item implements Comparable<Item> {
 //    }
 
 
-
+    @Override
     public String toString() {
         return (this.name + " - Verkaufswert: " + this.verkaufswert + " Gold - Gewicht: " + this.gewicht + " g");
     }
@@ -95,7 +82,6 @@ public class Item implements Comparable<Item> {
     }
 
 
-
     //Guckt ob das Object ein Instanz von Item ist
     @Override
     public boolean equals(Object obj) {
@@ -105,20 +91,28 @@ public class Item implements Comparable<Item> {
 
         //wenn ja, dann vergleicht.
         int vergleichsergebnis = this.compareTo((Item) obj);
-        if (vergleichsergebnis==0){
+        if (vergleichsergebnis == 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    public int getVerkaufswert(){
+
+    /**
+     * Gettermethode für Verkaufswert
+     * @return den Verkaufswert
+     */
+    public int getVerkaufswert() {
         return this.verkaufswert;
     }
 
-    public String getName(){
+    /**
+     * Gettermethode für Name
+     * @return den Namen
+     */
+    public String getName() {
         return this.name;
     }
-
 
 
 }

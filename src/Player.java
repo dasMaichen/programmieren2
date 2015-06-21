@@ -1,7 +1,37 @@
+import java.io.Serializable;
+
 /**
  * The type Player.
  */
-public class Player extends Creature {
+public final class Player extends Creature implements Serializable {
+
+
+    /**
+     * The constant HARD_HIT_COST.
+     */
+    public static final int HARD_HIT_COST = 20;
+    /**
+     * The constant HARD_HIT_SELF_DAMAGE_PERCENT.
+     */
+    public static final int HARD_HIT_SELF_DAMAGE_PERCENT = 20;
+    /**
+     * The constant FIREBALL_COST.
+     */
+    public static final int FIREBALL_COST = 20;
+    /**
+     * The constant REROLL_COST.
+     */
+    public static final int REROLL_COST = 35;
+
+    /**
+     * eine neue Player Instanz
+     */
+    private static Player instance = new Player();
+
+    /**
+     * Questlog für den Spieler
+     */
+    private Questlog questlog = new Questlog();
     /**
      * The Max ap.
      */
@@ -24,30 +54,12 @@ public class Player extends Creature {
     private int remainingItemUses;
 
     /**
-     * The constant HARD_HIT_COST.
-     */
-    public static final int HARD_HIT_COST = 20;
-    /**
-     * The constant HARD_HIT_SELF_DAMAGE_PERCENT.
-     */
-    public static final int HARD_HIT_SELF_DAMAGE_PERCENT = 20;
-
-    /**
-     * The constant FIREBALL_COST.
-     */
-    public static final int FIREBALL_COST = 20;
-    /**
-     * The constant REROLL_COST.
-     */
-    public static final int REROLL_COST = 35;
-
-
-    /**
      * Instantiates a new Player.
      */
-    public Player() {
+    private Player() {
         this(130, 20, 70, 3, 0.8);
     }
+
 
     /**
      * Instantiates a new Player.
@@ -58,9 +70,10 @@ public class Player extends Creature {
      * @param remainingItemUses the remaining item uses
      * @param hitChance         the hit chance
      */
-    public Player(int maxHp, int atk, int healingPower, int remainingItemUses, double hitChance) {
+    private Player(int maxHp, int atk, int healingPower, int remainingItemUses, double hitChance) {
         this(maxHp, atk, healingPower, remainingItemUses, hitChance, 70, 10);
     }
+
 
     /**
      * Instantiates a new Player.
@@ -73,7 +86,8 @@ public class Player extends Creature {
      * @param maxAp             the max ap
      * @param apRegen           the ap regen
      */
-    public Player(int maxHp, int atk, int healingPower, int remainingItemUses, double hitChance, int maxAp, int apRegen) {
+    private Player(int maxHp, int atk, int healingPower, int remainingItemUses, double hitChance, int maxAp,
+                   int apRegen) {
         super(maxHp, atk, hitChance);
         this.healingPower = healingPower;
         this.remainingItemUses = remainingItemUses;
@@ -82,8 +96,21 @@ public class Player extends Creature {
         this.apRegen = apRegen;
     }
 
+    /**
+     * Gettermethode für instance
+     * @return die Instanz
+     */
+    public static Player getInstance() {
+        return instance;
+    }
 
-    public Questlog questlog = new Questlog();
+    /**
+     * Settermethode für die Instanz
+     * @param player setzt Instanz
+     */
+    public static void setInstance(Player player) {
+        instance = player;
+    }
 
     /**
      * Gets remaining item uses.
@@ -194,7 +221,11 @@ public class Player extends Creature {
         }
     }
 
-    public Questlog getQuestlog(){
+    /**
+     * Gettermethode für den Spieler Questlog
+     * @return Questlog
+     */
+    public Questlog getQuestlog() {
         return questlog;
     }
 

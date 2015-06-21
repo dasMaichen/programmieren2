@@ -10,10 +10,10 @@ public class RecursiveBacktracker implements MazeGenerator {
      * (x, y)
      */
     private static int[][] offsets = {
-        {-1, 0},
-        {1, 0},
-        {0, -1},
-        {0, 1}
+            {-1, 0},
+            {1, 0},
+            {0, -1},
+            {0, 1}
     };
 
     /**
@@ -30,6 +30,24 @@ public class RecursiveBacktracker implements MazeGenerator {
      * The Goal set.
      */
     private boolean goalSet = false;
+
+    /**
+     * erzeugt neuen Händlerfeld
+     * @return Feld mit Händler
+     */
+    private static Field erzeugeHaendlerFeld() {
+        return new Field(FieldType.HAENDLER) {
+            /**
+             * eine neue Händlerinstanz
+             */
+            private Haendler haendler = new Haendler();
+
+            @Override
+            public void action(Player player) {
+                Haendler.handeln(player, haendler);
+            }
+        };
+    }
 
     /**
      * Valid new position.
@@ -60,7 +78,7 @@ public class RecursiveBacktracker implements MazeGenerator {
     private Field[][] initMaze(int height, int width) {
         assert height % 2 == 0 && width % 2 == 0;
         Field[][] map = new Field[height][width];
-        for (int i = 0; i< map.length; ++i) {
+        for (int i = 0; i < map.length; ++i) {
             for (int j = 0; j < map[i].length; ++j) {
                 map[i][j] = new Field(FieldType.WALL);
             }
@@ -72,25 +90,25 @@ public class RecursiveBacktracker implements MazeGenerator {
      * In maze.
      *
      * @param maze the maze
-     * @param x the x
-     * @param y the y
+     * @param x    the x
+     * @param y    the y
      * @return true, wenn sich die Koordinatem im Spielfeld befinden
      */
     private boolean inMaze(Field[][] maze, int x, int y) {
-        return !(y < 0 ||  y >= maze.length || x < 0 || x >= maze[0].length);
+        return !(y < 0 || y >= maze.length || x < 0 || x >= maze[0].length);
     }
 
     /**
      * Count visitable neighbors.
      *
      * @param maze the maze
-     * @param x the x
-     * @param y the y
+     * @param x    the x
+     * @param y    the y
      * @return the neighbors
      */
     private int countVisitableNeighbors(Field[][] maze, int x, int y) {
         int n = 0;
-        for (int[] offset: offsets) {
+        for (int[] offset : offsets) {
             int newX = x + offset[1];
             int newY = y + offset[0];
             if (inMaze(maze, newX, newY) && maze[newY][newX].getFieldType() != FieldType.WALL) {
@@ -118,12 +136,10 @@ public class RecursiveBacktracker implements MazeGenerator {
                             maze[i][j] = new Field(FieldType.FOUNTAIN);
                         } else if (r.nextDouble() >= 0.3 && r.nextDouble() < 0.6) {
                             maze[i][j] = new Field(FieldType.SMITHY);
-                        } else{
-                            maze[i][j] = new Field(FieldType.HAENDLER) {
-                                Haendler haendler = new Haendler();
-                            };
+                        } else {
+                            maze[i][j] = erzeugeHaendlerFeld();
                         }
-                    }  
+                    }
                 }
             }
         }
@@ -133,7 +149,7 @@ public class RecursiveBacktracker implements MazeGenerator {
      * Generate FieldType [ ] [ ].
      *
      * @param height the height
-     * @param width the width
+     * @param width  the width
      * @return the map as FieldType[][]
      */
     @Override
@@ -150,60 +166,55 @@ public class RecursiveBacktracker implements MazeGenerator {
 
 
         //Setze Questgeber.
-        int questgeberx = 2*r.nextInt(width/2)+1;
-        int questgebery = 2*r.nextInt(height/2)+1;
-        maze = generate(questgeberx, questgebery,  maze);
+        int questgeberx = 2 * r.nextInt(width / 2) + 1;
+        int questgebery = 2 * r.nextInt(height / 2) + 1;
+        maze = generate(questgeberx, questgebery, maze);
         maze[questgebery][questgeberx] = new Field(FieldType.QUESTGEBER);
         //maze = border(maze);
         placeSpecialFields(maze);
 
 
-        int hx = 2*r.nextInt(width/2)+1;
-        int hy = 2*r.nextInt(height/2)+1;
-        maze = generate(hx, hy,  maze);
-        maze[hy][hx] = new Field(FieldType.HAENDLER);
+        int hx = 2 * r.nextInt(width / 2) + 1;
+        int hy = 2 * r.nextInt(height / 2) + 1;
+        maze = generate(hx, hy, maze);
+        maze[hy][hx] = erzeugeHaendlerFeld();
         //maze = border(maze);
         placeSpecialFields(maze);
 
 
-        int hx2 = 2*r.nextInt(width/2)+1;
-        int hy2 = 2*r.nextInt(height/2)+1;
-        maze = generate(hx2, hy2,  maze);
-        maze[hy2][hx2] = new Field(FieldType.HAENDLER);
+        int hx2 = 2 * r.nextInt(width / 2) + 1;
+        int hy2 = 2 * r.nextInt(height / 2) + 1;
+        maze = generate(hx2, hy2, maze);
+        maze[hy2][hx2] = erzeugeHaendlerFeld();
         //maze = border(maze);
         placeSpecialFields(maze);
-
-
 
 
         return maze;
 
 
-
     }
-
-
 
     /**
      * Build hallway.
      *
-     * @param maze the maze
-     * @param curX the cur x
-     * @param curY the cur y
+     * @param maze   the maze
+     * @param curX   the cur x
+     * @param curY   the cur y
      * @param offset the offset
      * @param length the length
      */
     private void buildHallway(Field[][] maze, int curX, int curY, int[] offset, int length) {
 
         for (int i = 1; i <= length; ++i) {
-            
+
             curX += offset[1];
             curY += offset[0];
 
-            if (curY < 0 ||  curY >= maze.length || curX < 0 || curX >= maze[0].length) {
+            if (curY < 0 || curY >= maze.length || curX < 0 || curX >= maze[0].length) {
                 return;
             }
-            
+
             maze[curY][curX] = new Field(FieldType.PLAIN);
         }
     }
@@ -221,7 +232,7 @@ public class RecursiveBacktracker implements MazeGenerator {
         int[] validPositions = new int[offsets.length];
         int validPositionCount = offsets.length;
         for (int i = 0; i < offsets.length; ++i) {
-                validPositions[i] = i;
+            validPositions[i] = i;
         }
         boolean deadEnd = true;
         while (validPositionCount != 0) {
@@ -238,7 +249,7 @@ public class RecursiveBacktracker implements MazeGenerator {
 
             validPositions = ArrayHelpers.delete(validPositions, newPosIndex);
             validPositionCount--;
-            
+
         }
         if (!goalSet && deadEnd) {
             goalSet = true;

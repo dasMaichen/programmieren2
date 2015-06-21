@@ -23,7 +23,7 @@ public class PrintMaze {
      */
     public static void main(String[] args) {
         MazeGenerator gen = new RecursiveBacktracker();
-        Field[][] map = gen.generate(25,31);
+        Field[][] map = gen.generate(25, 31);
         printMaze(map);
         System.out.println();
     }

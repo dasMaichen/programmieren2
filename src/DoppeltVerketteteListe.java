@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -5,12 +6,22 @@ import java.util.ListIterator;
 
 /**
  * Created by mai on 14.06.15.
+ * @param <T> Elementtyp
  */
-public class DoppeltVerketteteListe<T> implements List<T> {
+public class DoppeltVerketteteListe<T> implements List<T>, Serializable {
 
+    /**
+     * erster Listenknoten
+     */
     private Listenknoten<T> ersterKnoten;
+    /**
+     * letzter Knoten der Liste
+     */
     private Listenknoten<T> letzterKnoten;
 
+    /**
+     * Groesse der Liste
+     */
     private int groesse;
 
 
@@ -21,11 +32,152 @@ public class DoppeltVerketteteListe<T> implements List<T> {
 
     @Override
     public boolean isEmpty() {
-        if(groesse == 0){
+        if (groesse == 0) {
             return true;
         }
         return false;
     }
+
+
+    @Override
+    public boolean add(T element) {
+
+        Listenknoten<T> knoten = new Listenknoten<>(element);
+
+        return add(knoten);
+    }
+
+
+    /**
+     * Hinzufügen
+     * @param knoten das zu hinzufügender Knoten
+     * @return  true, wenn hinzugefügt
+     */
+    boolean add(Listenknoten<T> knoten) {
+        return add(knoten, letzterKnoten);
+    }
+
+
+    /**
+     * Fügt hinzu
+     * @param einzufuegenderKnoten einzufügender Knoten
+     * @param vorgaengerKnoten der Vorgängerknoten
+     * @return true, wenn hinzugefügt
+     */
+    boolean add(Listenknoten<T> einzufuegenderKnoten, Listenknoten<T> vorgaengerKnoten) {
+
+        if (isEmpty()) {
+            ersterKnoten = einzufuegenderKnoten;
+            letzterKnoten = einzufuegenderKnoten;
+
+        } else if (vorgaengerKnoten == null) {
+            ersterKnoten.setVorgaenger(einzufuegenderKnoten);
+            einzufuegenderKnoten.setNachfolger(ersterKnoten);
+            ersterKnoten = einzufuegenderKnoten;
+
+        } else {
+            if (vorgaengerKnoten == letzterKnoten) {
+                letzterKnoten = einzufuegenderKnoten;
+            } else {
+                einzufuegenderKnoten.setNachfolger(vorgaengerKnoten.getNachfolger());
+                einzufuegenderKnoten.getNachfolger().setVorgaenger(einzufuegenderKnoten);
+            }
+
+            vorgaengerKnoten.setNachfolger(einzufuegenderKnoten);
+            einzufuegenderKnoten.setVorgaenger(vorgaengerKnoten);
+        }
+
+        groesse = groesse + 1;
+        return true;
+    }
+
+
+    @Override
+    public boolean remove(Object object) {
+
+        for (Listenknoten<T> knoten = ersterKnoten; !knoten.equals(letzterKnoten); knoten = knoten.getNachfolger()) {
+            if (knoten.getElement().equals(object)) {
+
+                return remove(knoten);
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Löscht Listenknoten
+     * @param knoten zu löschender Knoten
+     * @return true, wenn gelöscht.
+     */
+    boolean remove(Listenknoten<T> knoten) {
+        if (knoten == ersterKnoten) {
+            ersterKnoten = knoten.getNachfolger();
+        } else {
+            knoten.getVorgaenger().setNachfolger(knoten.getNachfolger());
+        }
+
+        if (knoten == letzterKnoten) {
+            letzterKnoten = knoten.getVorgaenger();
+        } else {
+            knoten.getNachfolger().setVorgaenger(knoten.getVorgaenger());
+        }
+        groesse = groesse - 1;
+        return true;
+    }
+
+    /**
+     * Getter
+     * @return ersten Knoten
+     */
+    Listenknoten<T> getErsterKnoten() {
+        return ersterKnoten;
+    }
+
+    /**
+     * Getter
+     * @return letzten Knoten
+     */
+    public Listenknoten<T> getLetzterKnoten() {
+        return letzterKnoten;
+    }
+
+
+    @Override
+    public T get(int position) {
+
+        int index = 0;
+
+        for (Listenknoten<T> knoten = ersterKnoten; knoten != null; knoten = knoten.getNachfolger()) {
+
+            if (index == position) {
+                return knoten.getElement();
+            }
+
+            index = index + 1;
+        }
+        return null;
+    }
+
+
+    @Override
+    public int indexOf(Object object) {
+
+        int index = 0;
+
+        for (Listenknoten<T> knoten = ersterKnoten; knoten != null; knoten = knoten.getNachfolger()) {
+
+            boolean gesuchtesElement = knoten.getElement().equals(object);
+
+            if (gesuchtesElement == true) {
+                return index;
+            }
+
+            index = index + 1;
+        }
+        return -1;
+    }
+
 
     @Override
     public boolean contains(Object o) {
@@ -47,84 +199,6 @@ public class DoppeltVerketteteListe<T> implements List<T> {
         throw new UnsupportedOperationException("geht nicht!");
     }
 
-    @Override
-    public boolean add(T element) {
-
-        Listenknoten<T> knoten = new Listenknoten<>(element);
-
-        return add(knoten);
-    }
-
-
-    boolean add(Listenknoten<T> knoten) {
-
-
-
-        return add(knoten,letzterKnoten);
-    }
-
-
-    boolean add(Listenknoten<T> einzufuegenderKnoten, Listenknoten<T> vorgaengerKnoten){
-
-        if(isEmpty()){
-            ersterKnoten = einzufuegenderKnoten;
-            letzterKnoten = einzufuegenderKnoten;
-
-        }else if(vorgaengerKnoten == null){
-            ersterKnoten.setVorgaenger(einzufuegenderKnoten);
-            einzufuegenderKnoten.setNachfolger(ersterKnoten);
-            ersterKnoten = einzufuegenderKnoten;
-
-        }else {
-            if(vorgaengerKnoten == letzterKnoten){
-                letzterKnoten = einzufuegenderKnoten;
-            }else {
-                einzufuegenderKnoten.setNachfolger(vorgaengerKnoten.getNachfolger());
-                einzufuegenderKnoten.getNachfolger().setVorgaenger(einzufuegenderKnoten);
-            }
-
-            vorgaengerKnoten.setNachfolger(einzufuegenderKnoten);
-            einzufuegenderKnoten.setVorgaenger(vorgaengerKnoten);
-        }
-
-        groesse = groesse + 1;
-        return true;
-    }
-
-
-    @Override
-    public boolean remove(Object object) {
-
-        for (Listenknoten<T> knoten = ersterKnoten; !knoten.equals(letzterKnoten); knoten = knoten.getNachfolger()) {
-            if(knoten.getElement().equals(object)){
-
-                return remove(knoten);
-            }
-        }
-        return false;
-    }
-
-
-
-    boolean remove(Listenknoten<T> knoten) {
-        if(knoten == ersterKnoten){
-            ersterKnoten = knoten.getNachfolger();
-        }else {
-            knoten.getVorgaenger().setNachfolger(knoten.getNachfolger());
-        }
-
-        if(knoten == letzterKnoten){
-            letzterKnoten = knoten.getVorgaenger();
-        }else {
-            knoten.getNachfolger().setVorgaenger(knoten.getVorgaenger());
-        }
-        groesse = groesse - 1;
-        return true;
-    }
-
-    Listenknoten<T> getErsterKnoten() {
-        return ersterKnoten;
-    }
 
     @Override
     public boolean containsAll(Collection<?> collection) {
@@ -141,6 +215,7 @@ public class DoppeltVerketteteListe<T> implements List<T> {
         throw new UnsupportedOperationException("geht nicht!");
     }
 
+
     @Override
     public boolean removeAll(Collection<?> collection) {
         throw new UnsupportedOperationException("geht nicht!");
@@ -156,10 +231,6 @@ public class DoppeltVerketteteListe<T> implements List<T> {
         throw new UnsupportedOperationException("geht nicht!");
     }
 
-    @Override
-    public T get(int i) {
-        throw new UnsupportedOperationException("geht nicht!");
-    }
 
     @Override
     public T set(int i, T t) {
@@ -176,10 +247,6 @@ public class DoppeltVerketteteListe<T> implements List<T> {
         throw new UnsupportedOperationException("geht nicht!");
     }
 
-    @Override
-    public int indexOf(Object o) {
-        throw new UnsupportedOperationException("geht nicht!");
-    }
 
     @Override
     public int lastIndexOf(Object o) {

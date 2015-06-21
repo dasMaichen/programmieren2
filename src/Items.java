@@ -5,8 +5,15 @@ import java.io.IOException;
  */
 public class Items {
 
+    /**
+     * Verfügbare Items, die werden vom csv-Datein gelesen.
+     */
     public static final DoppeltVerketteteListe<Item> VERFUEGBARE_ITEMS = itemsEinlesen();
 
+    /**
+     * Liest Items ein
+     * @return eine doppelverkettete Liste von Items
+     */
     private static DoppeltVerketteteListe<Item> itemsEinlesen() {
 
         CsvReader<Item> reader = new CsvReader<Item>(Item.class);

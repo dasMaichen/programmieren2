@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+ * Battle Klasse.
+ */
+
 public class Battle {
     public static void start(Player p) {
         Creature m = randomMonster();
@@ -79,11 +83,11 @@ public class Battle {
 
 
                 //Monsteritem werden dem Spieler übertragen.
-                int anzahlMonsterItem = m.inventar.size();
+                int anzahlMonsterItem = m.getInventar().size();
 
                 for (int i = 0; i < anzahlMonsterItem; i++) {
-                    Item monsterItem = (Item) m.inventar.get(i);
-                    p.inventar.add(monsterItem);
+                    Item monsterItem = (Item) m.getInventar().get(i);
+                    p.getInventar().add(monsterItem);
                 }
 
                 //Mostergold werden dem Spieler übertragen.

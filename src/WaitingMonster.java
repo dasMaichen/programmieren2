@@ -16,7 +16,7 @@ public class WaitingMonster extends Monster {
      * Instantiates a new Waiting monster.
      */
     public WaitingMonster() {
-        this(80,8,0.9);
+        this(80, 8, 0.9);
     }
 
     /**
@@ -27,7 +27,7 @@ public class WaitingMonster extends Monster {
      * @param hitChance the hit chance
      */
     public WaitingMonster(int hp, int atk, double hitChance) {
-        super( "Wartender Gegner", hp, atk, hitChance);
+        super("Wartender Gegner", hp, atk, hitChance);
     }
 
     /**
@@ -52,7 +52,7 @@ public class WaitingMonster extends Monster {
     public int attack(Creature c) {
         if (waited) {
             int atkOld = getAtk();
-            setAtk(getAtk()*2);
+            setAtk(getAtk() * 2);
             int damage = super.attack(c);
             setAtk(atkOld);
             waited = false;

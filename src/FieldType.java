@@ -1,3 +1,6 @@
+/**
+ * Knstanten für Feldtypen.
+ */
 
 public enum FieldType {
     /**
@@ -48,8 +51,15 @@ public enum FieldType {
     GOAL('Z') {
         @Override
         void action(Player player) {
-            System.out.println("Herzlichen Glückwunsch! Sie haben gewonnen!");
-            System.exit(0);
+
+            boolean fertig = Questgeber.getInstance().zielVoraussetzungErfuellt();
+
+            if (fertig) {
+                System.out.println("Hurra! Du hast gewonnen!");
+                System.exit(0);
+            } else {
+                System.out.println("Nee, nee, nee. Dir fehlen noch Quests!");
+            }
         }
     },
     /**
@@ -65,14 +75,14 @@ public enum FieldType {
             return false;
         }
     },
-
-    QUESTGEBER('Q'){
+    /**
+     * Der Questmaster
+     */
+    QUESTGEBER('Q') {
         @Override
-        void action(Player player){
-            Questgeber questgeber = new Questgeber();
-            questgeber.questsVerwalten(player,questgeber);
+        void action(Player player) {
 
-            System.out.println("Huhu! Ich habe noch nichts für dich.");
+            Questgeber.getInstance().questsVerwalten(player);
         }
     },
     /**
@@ -81,25 +91,44 @@ public enum FieldType {
     HAENDLER('H') {
         @Override
         public void action(Player player) {
-            Haendler haendler = new Haendler();
-            Haendler.handeln(player,haendler);
+            throw new UnsupportedOperationException();
         }
     };
 
+    /**
+     * the representation
+     */
     private final char representation;
 
+    /**
+     * Konstruktor
+     * @param representation representation
+     */
     private FieldType(char representation) {
         this.representation = representation;
     }
 
+    /**
+     * Aktion
+     * @param player der Spieler
+     */
     void action(Player player) {
 
     }
 
+    /**
+     * Getter
+     * @return representation
+     */
     public char getRepresentation() {
         return representation;
     }
 
+
+    /**
+     * ob begehbar
+     * @return wahr, wenn begehbar.
+     */
     public boolean isWalkable() {
         return true;
     }

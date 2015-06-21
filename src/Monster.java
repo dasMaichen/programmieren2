@@ -13,15 +13,6 @@ public class Monster extends Creature {
 
 
     /**
-     * Gets name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Instantiates a new Monster.
      */
     public Monster() {
@@ -46,9 +37,8 @@ public class Monster extends Creature {
      * @param hp        the hp
      * @param atk       the atk
      * @param hitChance the hit chance
-     *
-     * Monster bekommt jetzt random Item und random Gold.
-     *
+     *                  <p/>
+     *                  Monster bekommt jetzt random Item und random Gold.
      */
     public Monster(String name, int hp, int atk, double hitChance) {
         super(hp, atk, hitChance);
@@ -59,11 +49,20 @@ public class Monster extends Creature {
 
         int anzahlZufaelligerItems = generator.nextInt(5);
         for (int i = 0; i < anzahlZufaelligerItems; i++) {
-            int j = generator.nextInt(Items.VERFUEGBARE_ITEMS.size()-1);
-            inventar.add(Items.VERFUEGBARE_ITEMS.get(j));
+            int j = generator.nextInt(Items.VERFUEGBARE_ITEMS.size() - 1);
+            getInventar().add(Items.VERFUEGBARE_ITEMS.get(j));
         }
 
 
+    }
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
     /**

@@ -7,7 +7,7 @@ public class ResistantMonster extends Monster {
      * Instantiates a new Resistant monster.
      */
     public ResistantMonster() {
-        this(80,8,0.9);
+        this(80, 8, 0.9);
     }
 
     /**
@@ -18,7 +18,7 @@ public class ResistantMonster extends Monster {
      * @param hitChance the hit chance
      */
     public ResistantMonster(int hp, int atk, double hitChance) {
-        super( "Resistenter Gegner", hp, atk, hitChance);
+        super("Resistenter Gegner", hp, atk, hitChance);
     }
 
     /**
@@ -36,7 +36,7 @@ public class ResistantMonster extends Monster {
     /**
      * Take damage.
      *
-     * @param damage the damage
+     * @param damage     the damage
      * @param attackType the attack type
      * @return the damage
      */

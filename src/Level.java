@@ -122,8 +122,8 @@ public class Level {
      * @return true, wenn das Feld x,y begehbar ist
      */
     public boolean isWalkablePosition(int x, int y) {
-        return (y >= 0) && (x >=0) && (y < mapData.length) && (x < mapData[0].length) 
-            && mapData[y][x].getFieldType().isWalkable();
+        return (y >= 0) && (x >= 0) && (y < mapData.length) && (x < mapData[0].length)
+                && mapData[y][x].getFieldType().isWalkable();
     }
 
     /**
@@ -186,7 +186,7 @@ public class Level {
     public void moveLeft() {
         if (canMoveLeft()) {
             playerX--;
-         }
+        }
     }
 
     /**
@@ -205,22 +205,25 @@ public class Level {
         System.out.println("------------------------------");
         System.out.println("Richtung? ");
         if (canMoveUp()) {
-            System.out.println("[n] Norden");
+            System.out.println("[o] Norden");
         }
         if (canMoveDown()) {
-            System.out.println("[s] Süden");
+            System.out.println("[u] Süden");
         }
         if (canMoveRight()) {
-            System.out.println("[o] Osten");
+            System.out.println("[l] Osten");
         }
         if (canMoveLeft()) {
-            System.out.println("[w] Westen");
+            System.out.println("[r] Westen");
         }
         System.out.println("------------------------------");
 
-    //Inventar ist hinzugekommen.
+        //Inventar ist hinzugekommen.
         System.out.println("[i] Inventar ansehen");
-        System.out.println("[l] Questlog ansehen");
+        System.out.println("[q] Questlog ansehen");
+        System.out.println("");
+        System.out.println("[s] Spielstand speichern");
+        System.out.println("[e] Spiel beenden");
 
     }
 

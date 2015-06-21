@@ -23,7 +23,7 @@ public class ArrayHelpers {
      * @return ein neues Array ohne das gelöschte Element
      */
     public static int[] delete(int[] x, int index) {
-        int[] changed = new int[x.length-1];
+        int[] changed = new int[x.length - 1];
         int next = 0;
         for (int i = 0; i < x.length; ++i) {
             if (!(i == index)) {

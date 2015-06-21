@@ -1,9 +1,18 @@
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * The type Character.
  */
-public class Creature {
+public class Creature implements Serializable {
+
+    /**
+     * The constant ATTACK_NORMAL.
+     */
+    public static final int ATTACK_NORMAL = 0;
+    /**
+     * The constant ATTACK_SPECIAL.
+     */
+    public static final int ATTACK_SPECIAL = 1;
     /**
      * The Max hp.
      */
@@ -20,30 +29,15 @@ public class Creature {
      * The Hit chance.
      */
     private double hitChance;
-
-    /**
-     * The constant ATTACK_NORMAL.
-     */
-    public static final int ATTACK_NORMAL = 0;
-    /**
-     * The constant ATTACK_SPECIAL.
-     */
-    public static final int ATTACK_SPECIAL = 1;
-
-
-
-
-
     /**
      * Inventar.
      */
-    public Inventar inventar = new Inventar();
+    private Inventar inventar = new Inventar();
 
     /**
      * Gold das die Instanz besitzt.
      */
     private int gold = 0;
-
 
 
     /**
@@ -149,7 +143,7 @@ public class Creature {
      * @return the damage
      */
     public int takeDamage(int damage, int attackType) {
-        setHp(getHp()-damage);
+        setHp(getHp() - damage);
         return damage;
     }
 
@@ -179,15 +173,27 @@ public class Creature {
 
     //Creature erweitert um Inventar und Gold.
 
-    public Inventar getInventar(){
+    /**
+     * Gettermethode für Inventar
+     * @return Inventar.
+     */
+    public Inventar getInventar() {
         return inventar;
     }
 
-    public int getGold(){
+    /**
+     * Gettermethode für Gold
+     * @return Gold.
+     */
+    public int getGold() {
         return gold;
     }
 
-    public void setGold(int neuerGoldwert){
+    /**
+     * Settermethode für Gold
+     * @param neuerGoldwert neuer Goldwert.
+     */
+    public void setGold(int neuerGoldwert) {
         gold = neuerGoldwert;
     }
 
