@@ -1,21 +1,17 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
-public class HeilenAction extends AbstractAction {
+public class HeilenAction extends KampfAction {
 
-    private final JLabel statusLabel;
-
-    public HeilenAction(JLabel statusLabel) {
-        super("Trank trinken");
-        this.statusLabel = statusLabel;
+    public HeilenAction(JLabel statusLabel, Monster monster) {
+        super(statusLabel, monster, "Trank trinken");
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
+    protected void fuehreSpielerAktionAus() {
         if (Player.getInstance().heal()) {
-            this.statusLabel.setText("Spieler heilt sich!");
+            setzeStatus("Spieler heilt sich!");
         } else {
-            this.statusLabel.setText("Nicht genügend Heiltränke!");
+            setzeStatus("Nicht genügend Heiltränke!");
         }
     }
 }

@@ -17,16 +17,6 @@ public class Battle {
 
         while (true) {
 
-            System.out.println("Monster greift an!");
-            int monsterDamage = m.attack(p);
-            if (monsterDamage == -1) {
-                System.out.println("Monster verfehlt!");
-            } else if (monsterDamage == -2) {
-                System.out.println("Monster tut nichts.");
-            } else {
-                System.out.printf("Monster trifft und macht %d Schaden!%n", monsterDamage);
-            }
-
             if (p.isDefeated()) {
                 System.out.println("Game Over!");
                 System.exit(0);
