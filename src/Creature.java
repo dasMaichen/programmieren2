@@ -1,3 +1,5 @@
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
 /**
@@ -39,6 +41,11 @@ public class Creature implements Serializable {
      */
     private int gold = 0;
 
+    protected final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+
+    public enum Property {
+;
+    }
 
     /**
      * Instantiates a new Character.
@@ -52,6 +59,10 @@ public class Creature implements Serializable {
         this.hp = maxHp;
         this.atk = atk;
         this.hitChance = hitChance;
+    }
+
+    public void addPropertyChangeListener(Property property, PropertyChangeListener changeListener) {
+        this.changeSupport.addPropertyChangeListener(property.name(), changeListener);
     }
 
     /**
