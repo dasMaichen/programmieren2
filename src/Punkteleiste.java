@@ -1,27 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by mai on 27.06.15.
- */
-public class Bar extends JProgressBar implements LogicListener {
+public class Punkteleiste extends JProgressBar implements LogicListener {
 
     private final Color leerFarbe = Color.RED;
     private final Color vollFarbe;
 
-
-    //   public Bar() {
-    //     super(0, 5);
-    //   setValue(getMaximum());
-//
-    //  }
-
-
-    public Bar(int minWert, int maxWert) {
+    public Punkteleiste(int minWert, int maxWert) {
         this(minWert, maxWert, Color.GREEN);
     }
 
-    public Bar(int minWert, int maxWert, Color vollFarbe) {
+    public Punkteleiste(int minWert, int maxWert, Color vollFarbe) {
         super(minWert, maxWert);
         this.vollFarbe = vollFarbe;
     }

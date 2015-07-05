@@ -8,7 +8,7 @@ public class MonsterStatusPanel extends JPanel {
 
     private JLabel name = new JLabel("ich bin ein Monster");
 
-    private Bar lpAnzeige = new Bar(0,100);
+    private Punkteleiste lpAnzeige = new Punkteleiste(0,100);
 
 
     public MonsterStatusPanel(){

@@ -8,8 +8,8 @@ public class PlayerStatusPanel extends JPanel {
 
     private JLabel name = new JLabel("ich bin ein Player");
 
-    private Bar lpAnzeige = new Bar(0,120);
-    private Bar apAnzeige = new Bar(0,30,Color.BLUE);
+    private Punkteleiste lpAnzeige = new Punkteleiste(0,120);
+    private Punkteleiste apAnzeige = new Punkteleiste(0,30,Color.BLUE);
 
 
     public PlayerStatusPanel(){
