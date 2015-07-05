@@ -3,10 +3,13 @@ import java.awt.*;
 
 public class Layout extends JFrame {
 
+    private final Monster monster = new Monster();
+    private final JLabel statusLabel;
+
     public Layout() {
         setSize(500, 500);
 
-        setLocation(600,300);
+        setLocation(600, 300);
 
         JLabel label;
         setLayout(new GridBagLayout());
@@ -22,7 +25,7 @@ public class Layout extends JFrame {
         constraints.gridy = 0;
         constraints.gridx = 0;
 
-        add(new MonsterStatusPanel(), constraints);
+        add(new MonsterStatusPanel(monster), constraints);
 
         label = new JLabel("Bild eines Monsters");
         constraints.gridx = 1;
@@ -44,10 +47,9 @@ public class Layout extends JFrame {
         constraints.gridy = 2;
         constraints.weighty = 0.5;
 
-        label = new JLabel("     Was möchtest du tun?");
-        label.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        this.statusLabel = new JLabel("     Was möchtest du tun?");
         constraints.gridx = 0;
-        add(label, constraints);
+        add(this.statusLabel, constraints);
 
 
         label = new JLabel("");
@@ -63,7 +65,7 @@ public class Layout extends JFrame {
 
         constraints.gridy = 3;
 
-        button = new JButton("Angriff");
+        button = new JButton(new AngriffAction(this.statusLabel, monster));
         constraints.gridx = 0;
         add(button, constraints);
 

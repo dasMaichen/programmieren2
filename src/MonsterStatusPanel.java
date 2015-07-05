@@ -8,10 +8,10 @@ public class MonsterStatusPanel extends JPanel {
 
     private JLabel name = new JLabel("ich bin ein Monster");
 
-    private Punkteleiste lpAnzeige = Punkteleiste.create(new Monster(), Creature.Property.HP);
+    private final Punkteleiste lpAnzeige;
 
 
-    public MonsterStatusPanel(){
+    public MonsterStatusPanel(Monster monster){
 
         setLayout(new GridBagLayout());
 
@@ -27,16 +27,15 @@ public class MonsterStatusPanel extends JPanel {
         add(lebenspunkte,gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
+        this.lpAnzeige = Punkteleiste.create(monster, Creature.Property.HP);
         add(lpAnzeige,gridBagConstraints);
 
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridx = 1;
 
         gridBagConstraints.gridx = 2;
-        JLabel maxLp = new JLabel("70"+"/"+"100");
-
-
-        add(maxLp,gridBagConstraints);
+        JLabel lpAnzeigeText = new Ausgabetext(this.lpAnzeige);
+        add(lpAnzeigeText,gridBagConstraints);
 
 
         lpAnzeige.setValue(70);
