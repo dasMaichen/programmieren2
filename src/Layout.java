@@ -91,7 +91,17 @@ public class Layout extends JFrame implements PropertyChangeListener {
         if (Creature.Property.HP.name().equals(propertyChangeEvent.getPropertyName())) {
             Creature creature = (Creature) propertyChangeEvent.getSource();
             if (creature.isDefeated()) {
+                deaktiviereAlleButtons();
                 new Timer(DEFAULT_DELAY, new BattleEndListener(creature)).start();
+            }
+        }
+    }
+
+    private void deaktiviereAlleButtons() {
+        for(Component kindKomponente : getContentPane().getComponents()) {
+            if (kindKomponente instanceof JButton) {
+                JButton button = (JButton) kindKomponente;
+                button.setEnabled(false);
             }
         }
     }
