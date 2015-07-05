@@ -43,7 +43,7 @@ public class Creature implements Serializable {
 
     protected final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
-    public static enum Property {
+    public enum Property {
         HP;
     }
 

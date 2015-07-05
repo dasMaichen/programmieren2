@@ -79,7 +79,7 @@ public class Layout extends JFrame implements PropertyChangeListener {
 
         constraints.gridy = 4;
 
-        button = new JButton("Items");
+        button = new JButton(new HeilenAction(this.statusLabel));
         constraints.gridx = 0;
         add(button, constraints);
 

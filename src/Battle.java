@@ -29,20 +29,9 @@ public class Battle {
             int playerDamage;
             switch (aktion) {
                 case "1":
-                    playerDamage = p.attack(m);
-                    if (playerDamage == -1) {
-                        System.out.println("Spieler verfehlt!");
-                    } else {
-                        System.out.printf("Spieler trifft und macht %d Schaden!%n", playerDamage);
-                    }
-                    break;
+                    throw new UnsupportedOperationException("fertig");
                 case "2":
-                    if (p.heal()) {
-                        System.out.println("Spieler heilt sich!");
-                    } else {
-                        System.out.println("Nicht genügend Heiltränke!");
-                    }
-                    break;
+                    throw new UnsupportedOperationException("fertig");
                 case "3":
                     playerDamage = p.hardHit(m);
                     if (playerDamage != -1) {
