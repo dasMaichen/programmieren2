@@ -16,54 +16,7 @@ public class Battle {
         System.out.print(m);
 
         while (true) {
-            System.out.println("------------------------------------------------");
-            System.out.println("Mögliche Aktionen:");
-            System.out.println("1 -> Angriff");
-            System.out.printf("2 -> Item (%d verbleibend)%n", p.getRemainingItemUses());
-            System.out.printf("3 -> Harter Schlag (%d AP, %d%% Selbstschaden)%n", Player.HARD_HIT_COST, Player.HARD_HIT_SELF_DAMAGE_PERCENT);
-            System.out.printf("4 -> Feuerball (%d AP)%n", Player.FIREBALL_COST);
-            System.out.printf("5 -> ATK auswürfeln (%d AP)%n", Player.REROLL_COST);
-            System.out.println("Welche Aktion?: ");
-            System.out.println("------------------------------------------------");
-            String aktion = sc.nextLine();
-            int playerDamage;
-            switch (aktion) {
-                case "1":
-                    throw new UnsupportedOperationException("fertig");
-                case "2":
-                    throw new UnsupportedOperationException("fertig");
-                case "3":
-                    playerDamage = p.hardHit(m);
-                    if (playerDamage != -1) {
-                        System.out.println("Spieler schlägt hart zu!");
-                        System.out.printf("Spieler verursacht %d Schaden!%n", playerDamage);
-                        System.out.printf("Spieler verursacht %d Selbstschaden!%n", (int) (Player.HARD_HIT_SELF_DAMAGE_PERCENT / 100.0 * playerDamage));
-                    } else {
-                        System.out.println("Nicht genügend AP!");
-                    }
-                    break;
-                case "4":
-                    playerDamage = p.fireball(m);
-                    if (playerDamage != -1) {
-                        System.out.println("Spieler schießt einen Feuerball!");
-                        System.out.printf("Spieler verursacht %d Schaden!%n", playerDamage);
-                    } else {
-                        System.out.println("Nicht genügend AP!");
-                    }
-                    break;
-                case "5":
-                    if (p.reroll()) {
-                        System.out.println("ATK neu ausgewürfelt!");
-                        System.out.print("Neue Statuswerte: ");
-                        System.out.print(p);
-                    } else {
-                        System.out.println("Nicht genügend AP!");
-                    }
-                    break;
-                default:
-                    System.out.println("Fehlerhafte Aktion!");
-                    continue;
-            }
+
 
             if (p.isDefeated()) {
                 System.out.println("Game Over!");

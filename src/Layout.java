@@ -53,15 +53,9 @@ public class Layout extends JFrame implements PropertyChangeListener {
 
         this.statusLabel = new JLabel("     Was möchtest du tun?");
         constraints.gridx = 0;
+        constraints.gridwidth = 2;
         add(this.statusLabel, constraints);
-
-
-        label = new JLabel("");
-        label.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-        constraints.gridx = 1;
-        add(label, constraints);
-
-
+        constraints.gridwidth = 1;
 
 
         JButton button;
@@ -73,7 +67,7 @@ public class Layout extends JFrame implements PropertyChangeListener {
         constraints.gridx = 0;
         add(button, constraints);
 
-        button = new JButton("Zauber");
+        button = new JButton(new ZauberAction(this.statusLabel, monster));
         constraints.gridx = 1;
         add(button, constraints);
 
