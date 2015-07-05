@@ -1,15 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class Layout extends JFrame {
+public class Layout extends JFrame implements PropertyChangeListener {
 
     private final Monster monster = new Monster();
     private final JLabel statusLabel;
 
     public Layout() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocation(600, 300);
         setSize(500, 500);
 
-        setLocation(600, 300);
+        this.monster.addPropertyChangeListener(Creature.Property.HP, this);
 
         JLabel label;
         setLayout(new GridBagLayout());
@@ -86,5 +90,15 @@ public class Layout extends JFrame {
 
     public static void main(String[] args) {
         new Layout().setVisible(true);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        if (Creature.Property.HP.name().equals(propertyChangeEvent.getPropertyName())) {
+            Creature creature = (Creature) propertyChangeEvent.getSource();
+            if (creature.isDefeated()) {
+                dispose();
+            }
+        }
     }
 }

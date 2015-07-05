@@ -100,9 +100,10 @@ public class Creature implements Serializable {
      * @param hp the hp
      */
     public void setHp(int hp) {
+        int oldValue = this.hp;
         hp = Math.min(this.maxHp, Math.max(0, hp));
-        this.changeSupport.firePropertyChange(Property.HP.name(), this.hp, hp);
         this.hp = hp;
+        this.changeSupport.firePropertyChange(Property.HP.name(), oldValue, hp);
     }
 
     /**
