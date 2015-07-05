@@ -17,31 +17,6 @@ public class Battle {
 
         while (true) {
 
-
-            if (p.isDefeated()) {
-                System.out.println("Game Over!");
-                System.exit(0);
-            } else if (m.isDefeated()) {
-                System.out.println("Spieler gewinnt!");
-
-
-                //Monsteritem werden dem Spieler übertragen.
-                int anzahlMonsterItem = m.getInventar().size();
-
-                for (int i = 0; i < anzahlMonsterItem; i++) {
-                    Item monsterItem = (Item) m.getInventar().get(i);
-                    p.getInventar().add(monsterItem);
-                }
-
-                //Mostergold werden dem Spieler übertragen.
-                p.setGold(p.getGold() + m.getGold());
-
-                break;
-            }
-
-            System.out.print(p);
-            System.out.print(m);
-
             System.out.println("Monster greift an!");
             int monsterDamage = m.attack(p);
             if (monsterDamage == -1) {

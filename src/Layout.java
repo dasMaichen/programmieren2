@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class Layout extends JFrame implements PropertyChangeListener {
 
+    public static final int DEFAULT_DELAY = 2000;
     private final Monster monster = new Monster();
     private final JLabel statusLabel;
 
@@ -25,7 +28,6 @@ public class Layout extends JFrame implements PropertyChangeListener {
         constraints.fill = GridBagConstraints.BOTH;
 
 
-
         constraints.gridy = 0;
         constraints.gridx = 0;
 
@@ -36,7 +38,6 @@ public class Layout extends JFrame implements PropertyChangeListener {
         add(label, constraints);
 
 
-
         constraints.gridy = 1;
 
         label = new JLabel("Ein Bild von mir! :) ");
@@ -45,7 +46,6 @@ public class Layout extends JFrame implements PropertyChangeListener {
 
         constraints.gridx = 1;
         add(new PlayerStatusPanel(), constraints);
-
 
 
         constraints.gridy = 2;
@@ -91,7 +91,44 @@ public class Layout extends JFrame implements PropertyChangeListener {
         if (Creature.Property.HP.name().equals(propertyChangeEvent.getPropertyName())) {
             Creature creature = (Creature) propertyChangeEvent.getSource();
             if (creature.isDefeated()) {
-                dispose();
+                new Timer(DEFAULT_DELAY, new BattleEndListener(creature)).start();
+            }
+        }
+    }
+
+    private class BattleEndListener implements ActionListener {
+
+        private final Creature deadCreature;
+
+        BattleEndListener(Creature deadCreature) {
+            this.deadCreature = deadCreature;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            if (this.deadCreature == Player.getInstance()) {
+                System.out.println("Game Over!");
+                System.exit(0);
+            } else {
+                statusLabel.setText("Spieler gewinnt!");
+
+                //Monsteritem werden dem Spieler übertragen.
+                int anzahlMonsterItem = monster.getInventar().size();
+
+                for (int i = 0; i < anzahlMonsterItem; i++) {
+                    Item monsterItem = (Item) monster.getInventar().get(i);
+                    Player.getInstance().getInventar().add(monsterItem);
+                }
+
+                //Mostergold werden dem Spieler übertragen.
+                Player.getInstance().setGold(Player.getInstance().getGold() + monster.getGold());
+
+                new Timer(DEFAULT_DELAY, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        dispose();
+                    }
+                }).start();
             }
         }
     }
