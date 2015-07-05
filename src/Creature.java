@@ -43,8 +43,8 @@ public class Creature implements Serializable {
 
     protected final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
-    public enum Property {
-;
+    public static enum Property {
+        HP;
     }
 
     /**
@@ -100,13 +100,9 @@ public class Creature implements Serializable {
      * @param hp the hp
      */
     public void setHp(int hp) {
-        if (hp > maxHp) {
-            this.hp = maxHp;
-        } else if (hp < 0) {
-            this.hp = 0;
-        } else {
-            this.hp = hp;
-        }
+        hp = Math.min(this.maxHp, Math.max(0, hp));
+        this.changeSupport.firePropertyChange(Property.HP.name(), this.hp, hp);
+        this.hp = hp;
     }
 
     /**
@@ -186,6 +182,7 @@ public class Creature implements Serializable {
 
     /**
      * Gettermethode für Inventar
+     *
      * @return Inventar.
      */
     public Inventar getInventar() {
@@ -194,6 +191,7 @@ public class Creature implements Serializable {
 
     /**
      * Gettermethode für Gold
+     *
      * @return Gold.
      */
     public int getGold() {
@@ -202,6 +200,7 @@ public class Creature implements Serializable {
 
     /**
      * Settermethode für Gold
+     *
      * @param neuerGoldwert neuer Goldwert.
      */
     public void setGold(int neuerGoldwert) {
