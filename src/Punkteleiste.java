@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Punkteleiste extends JProgressBar implements LogicListener {
+public class Punkteleiste extends JProgressBar implements PunkteListener {
 
     private final Color leerFarbe = Color.RED;
     private final Color vollFarbe;

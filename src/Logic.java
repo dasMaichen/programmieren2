@@ -7,15 +7,15 @@ import java.util.List;
 class Logic {
     private int counter = 0;
     private int maximum = 0;
-    private List<LogicListener> listeners = new ArrayList<LogicListener>();
+    private List<PunkteListener> listeners = new ArrayList<PunkteListener>();
 
-    public void addLogicListener(LogicListener logicListener) {
+    public void addLogicListener(PunkteListener logicListener) {
         this.listeners.add(logicListener);
     }
 
     public void increaseCounter() {
         counter++;
-        for (LogicListener logicListener : listeners) {
+        for (PunkteListener logicListener : listeners) {
             logicListener.onCounterHasChanged(counter,maximum);
         }
     }
