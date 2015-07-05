@@ -1,3 +1,4 @@
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 
 /**
@@ -53,13 +54,20 @@ public final class Player extends Creature implements Serializable {
      */
     private int remainingItemUses;
 
+    public int getAp() {
+        return ap;
+    }
+
+    public enum Property {
+        AP;
+    }
+
     /**
      * Instantiates a new Player.
      */
     private Player() {
         this(130, 20, 70, 3, 0.8);
     }
-
 
 
     /**
@@ -99,6 +107,7 @@ public final class Player extends Creature implements Serializable {
 
     /**
      * Gettermethode für instance
+     *
      * @return die Instanz
      */
     public static Player getInstance() {
@@ -107,10 +116,24 @@ public final class Player extends Creature implements Serializable {
 
     /**
      * Settermethode für die Instanz
+     *
      * @param player setzt Instanz
      */
     public static void setInstance(Player player) {
         instance = player;
+    }
+
+    Player newInstance() {
+        return new Player(this.getMaxHp(), this.getAtk(), this.healingPower, this.remainingItemUses, this
+                .getHitChance(), this.maxAp, this.apRegen);
+    }
+
+    public void addPropertyChangeListener(Property property, PropertyChangeListener changeListener) {
+        this.changeSupport.addPropertyChangeListener(property.name(), changeListener);
+    }
+
+    public int getMaxAp() {
+        return maxAp;
     }
 
     /**
@@ -142,10 +165,10 @@ public final class Player extends Creature implements Serializable {
      *
      * @return die regenerierten AP
      */
-    public int regenerateAp() {
+    public void regenerateAp() {
         int oldAp = this.ap;
         this.ap = Math.min(this.ap + this.apRegen, this.maxAp);
-        return this.ap - oldAp;
+        this.changeSupport.firePropertyChange(Property.AP.name(), oldAp, this.ap);
     }
 
     /**
@@ -163,11 +186,13 @@ public final class Player extends Creature implements Serializable {
      * @param cost the cost
      * @return true, wenn die AP erfolgreich verbraucht wurden
      */
-    private boolean useAp(int cost) {
+    boolean useAp(int cost) {
         if (cost > this.ap) {
             return false;
         } else {
+            int oldAp = this.ap;
             this.ap -= cost;
+            this.changeSupport.firePropertyChange(Property.AP.name(), oldAp, this.ap);
             return true;
         }
     }
@@ -224,6 +249,7 @@ public final class Player extends Creature implements Serializable {
 
     /**
      * Gettermethode für den Spieler Questlog
+     *
      * @return Questlog
      */
     public Questlog getQuestlog() {
