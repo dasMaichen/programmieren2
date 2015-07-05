@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class Layout extends JFrame implements PropertyChangeListener {
+public class Kampf extends JFrame implements PropertyChangeListener {
 
     public static final int DEFAULT_DELAY = 2000;
-    private final Monster monster = new Monster();
+    private final Monster monster = randomMonster();
     private final JLabel statusLabel;
 
-    public Layout() {
+    public Kampf() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocation(600, 300);
         setSize(500, 500);
@@ -83,7 +83,7 @@ public class Layout extends JFrame implements PropertyChangeListener {
     }
 
     public static void main(String[] args) {
-        new Layout().setVisible(true);
+        new Kampf().setVisible(true);
     }
 
     @Override
@@ -137,9 +137,28 @@ public class Layout extends JFrame implements PropertyChangeListener {
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
                         dispose();
+                        Sync.battleFinished();
                     }
                 }).start();
             }
         }
+    }
+
+    /**
+     * Random monster.
+     *
+     * @return the monster
+     */
+    private static Monster randomMonster() {
+        Monster[] monsterFarm = {
+                new Monster(),
+                new ResistantMonster(),
+                new WaitingMonster()
+        };
+
+        double bucketSize = 1.0 / monsterFarm.length;
+        double bucket = Math.random() / bucketSize;
+        int selectedMonster = (int) Math.floor(bucket);
+        return monsterFarm[selectedMonster];
     }
 }
