@@ -1,16 +1,24 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-/**
- * Created by mai on 30.06.15.
- */
-public class Ausgabetext extends JLabel implements PunkteListener {
-    @Override
-    public void onCounterHasChanged(int lpWert, int maxLpWert) {
-        setText(lpWert+"/"+maxLpWert);
+public class Ausgabetext extends JLabel implements ChangeListener {
+
+    public Ausgabetext(JProgressBar progressBar) {
+        super(createTextFromProgress(progressBar));
+        progressBar.addChangeListener(this);
+    }
+
+    private static String createTextFromProgress(JProgressBar progressBar) {
+        return progressBar.getValue() + "/" + progressBar.getMaximum();
     }
 
     @Override
-    public void apVeraendern(int apWert, int maxApWert) {
-        setText(apWert+"/"+maxApWert);
+    public void stateChanged(ChangeEvent changeEvent) {
+        if (!(changeEvent.getSource() instanceof JProgressBar)) {
+            throw new IllegalArgumentException();
+        }
+
+        setText(createTextFromProgress((JProgressBar) changeEvent.getSource()));
     }
 }

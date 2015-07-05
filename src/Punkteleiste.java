@@ -1,30 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class Punkteleiste extends JProgressBar implements PunkteListener {
+public class Punkteleiste extends JProgressBar implements PropertyChangeListener {
 
     private final Color leerFarbe = Color.RED;
     private final Color vollFarbe;
 
-    public Punkteleiste(int minWert, int maxWert) {
-        this(minWert, maxWert, Color.GREEN);
+    public static Punkteleiste create(Creature creature, Creature.Property property) {
+        if (property != Creature.Property.HP) {
+            throw new IllegalArgumentException();
+        }
+
+        Punkteleiste punkteleiste = new Punkteleiste(creature.getHp(), creature.getMaxHp(), Color.GREEN);
+        creature.addPropertyChangeListener(property, punkteleiste);
+        return punkteleiste;
     }
 
-    public Punkteleiste(int minWert, int maxWert, Color vollFarbe) {
-        super(minWert, maxWert);
+    public static Punkteleiste create(Player player, Player.Property property) {
+        if (property != Player.Property.AP) {
+            throw new IllegalArgumentException();
+        }
+
+        Punkteleiste punkteleiste = new Punkteleiste(player.getAp(), player.getMaxAp(), Color.BLUE);
+        player.addPropertyChangeListener(property, punkteleiste);
+        return punkteleiste;
+    }
+
+    public Punkteleiste(int wert, int maxWert, Color vollFarbe) {
+        super(0, maxWert);
         this.vollFarbe = vollFarbe;
-    }
-
-    @Override
-    public void onCounterHasChanged(int lpWert, int maxLpWert) {
-        setValue(getMaximum() - lpWert);
-        setMaximum(maxLpWert);
-    }
-
-    @Override
-    public void apVeraendern(int apWert, int maxApWert) {
-        setValue(maxApWert-apWert);
-        setMaximum(maxApWert);
+        setValue(wert);
     }
 
     private int begrenzeAufFarbbereich(double value) {
@@ -42,5 +49,18 @@ public class Punkteleiste extends JProgressBar implements PunkteListener {
         int blau = begrenzeAufFarbbereich(faktor * vollFarbe.getBlue() + (2.0 - faktor) * leerFarbe.getBlue());
 
         setForeground(new Color(rot, gruen, blau));
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        if (!isValidProperty(propertyChangeEvent.getPropertyName())) {
+            throw new IllegalArgumentException();
+        }
+
+        setValue((Integer) propertyChangeEvent.getNewValue());
+    }
+
+    private boolean isValidProperty(String propertyName) {
+        return propertyName.equals(Creature.Property.HP.name()) || propertyName.equals(Player.Property.AP.name());
     }
 }

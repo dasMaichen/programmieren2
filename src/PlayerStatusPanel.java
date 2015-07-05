@@ -8,11 +8,11 @@ public class PlayerStatusPanel extends JPanel {
 
     private JLabel name = new JLabel("ich bin ein Player");
 
-    private Punkteleiste lpAnzeige = new Punkteleiste(0,120);
-    private Punkteleiste apAnzeige = new Punkteleiste(0,30,Color.BLUE);
+    private Punkteleiste lpAnzeige = Punkteleiste.create(Player.getInstance(), Creature.Property.HP);
+    private Punkteleiste apAnzeige = Punkteleiste.create(Player.getInstance(), Player.Property.AP);
 
 
-    public PlayerStatusPanel(){
+    public PlayerStatusPanel() {
 
 
         setLayout(new GridBagLayout());
@@ -22,7 +22,7 @@ public class PlayerStatusPanel extends JPanel {
 
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridx = 1;
-        add(name,gridBagConstraints);
+        add(name, gridBagConstraints);
 
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridx = 0;
@@ -30,31 +30,28 @@ public class PlayerStatusPanel extends JPanel {
         add(ap, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
-        add(apAnzeige,gridBagConstraints);
+        add(apAnzeige, gridBagConstraints);
 
 
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridx = 2;
-        Ausgabetext maxAp = new Ausgabetext();
-        add(maxAp,gridBagConstraints);
+        Ausgabetext apAnzeigeText = new Ausgabetext(apAnzeige);
+        add(apAnzeigeText, gridBagConstraints);
 
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridx = 0;
         JLabel lebenspunkte = new JLabel("LP: ");
-        lpAnzeige.onCounterHasChanged(Player.getInstance().getHp(),Player.getInstance().getMaxHp());
         add(lebenspunkte, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
-        add(lpAnzeige,gridBagConstraints);
+        add(lpAnzeige, gridBagConstraints);
 
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridx = 1;
 
         gridBagConstraints.gridx = 2;
-        Ausgabetext maxLp = new Ausgabetext();
-
-
-        add(maxLp,gridBagConstraints);
+        Ausgabetext lpAnzeigeText = new Ausgabetext(lpAnzeige);
+        add(lpAnzeigeText, gridBagConstraints);
 
     }
 
