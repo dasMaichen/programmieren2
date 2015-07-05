@@ -5,6 +5,7 @@ import java.util.Scanner;
  */
 
 public class Battle {
+
     public static void start(Player p) {
         Creature m = randomMonster();
 

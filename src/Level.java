@@ -211,10 +211,10 @@ public class Level {
             System.out.println("[u] Süden");
         }
         if (canMoveRight()) {
-            System.out.println("[l] Osten");
+            System.out.println("[r] Osten");
         }
         if (canMoveLeft()) {
-            System.out.println("[r] Westen");
+            System.out.println("[l] Westen");
         }
         System.out.println("------------------------------");
 

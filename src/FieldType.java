@@ -42,6 +42,8 @@ public enum FieldType {
     BATTLE('B') {
         @Override
         void action(Player player) {
+            Layout layout = new Layout();
+            layout.setVisible(true);
             Battle.start(player);
         }
     },
