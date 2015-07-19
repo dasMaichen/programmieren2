@@ -161,7 +161,8 @@ public class Creature implements Serializable {
      * @return true, wenn man besiegt ist
      */
     public boolean isDefeated() {
-        return getHp() == 0;
+
+        return (getHp() <= 0);
     }
 
     /**

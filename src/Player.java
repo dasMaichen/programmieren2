@@ -44,7 +44,7 @@ public final class Player extends Creature implements Serializable {
     /**
      * The Ap.
      */
-    private int ap;
+    private Integer ap;
     /**
      * The Healing power.
      */
@@ -163,12 +163,13 @@ public final class Player extends Creature implements Serializable {
     /**
      * Regenerate ap.
      *
-     * @return die regenerierten AP
      */
     public void regenerateAp() {
-        int oldAp = this.ap;
-        this.ap = Math.min(this.ap + this.apRegen, this.maxAp);
-        this.changeSupport.firePropertyChange(Property.AP.name(), oldAp, this.ap);
+        synchronized (ap){
+            int oldAp = this.ap;
+            this.ap = Math.min(this.ap + 1, this.maxAp);
+            this.changeSupport.firePropertyChange(Property.AP.name(), oldAp, (int)this.ap);
+        }
     }
 
     /**
@@ -187,13 +188,15 @@ public final class Player extends Creature implements Serializable {
      * @return true, wenn die AP erfolgreich verbraucht wurden
      */
     boolean useAp(int cost) {
-        if (cost > this.ap) {
-            return false;
-        } else {
-            int oldAp = this.ap;
-            this.ap -= cost;
-            this.changeSupport.firePropertyChange(Property.AP.name(), oldAp, this.ap);
-            return true;
+        synchronized (ap) {
+            if (cost > this.ap) {
+                return false;
+            } else {
+                int oldAp = this.ap;
+                this.ap -= cost;
+                this.changeSupport.firePropertyChange(Property.AP.name(), oldAp, (int) this.ap);
+                return true;
+            }
         }
     }
 

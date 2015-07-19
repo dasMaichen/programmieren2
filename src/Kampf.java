@@ -10,12 +10,19 @@ public class Kampf extends JFrame implements PropertyChangeListener {
     public static final int DEFAULT_DELAY = 2000;
     private final Monster monster = randomMonster();
     private final JLabel statusLabel;
+    Timer apregenerator;
 
     public Kampf() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocation(600, 300);
         setSize(500, 500);
 
+        apregenerator = new Timer(1000, new RegenerationsListner());
+        apregenerator.start();
+
+        monster.getAngriffTimer().start();
+
+        Player.getInstance().addPropertyChangeListener(Creature.Property.HP, this);
         this.monster.addPropertyChangeListener(Creature.Property.HP, this);
 
         JLabel label;
@@ -86,6 +93,7 @@ public class Kampf extends JFrame implements PropertyChangeListener {
         new Kampf().setVisible(true);
     }
 
+
     @Override
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
         if (Creature.Property.HP.name().equals(propertyChangeEvent.getPropertyName())) {
@@ -116,10 +124,15 @@ public class Kampf extends JFrame implements PropertyChangeListener {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+
+            apregenerator.stop();
+
             if (this.deadCreature == Player.getInstance()) {
+                monster.getAngriffTimer().stop();
                 System.out.println("Game Over!");
                 System.exit(0);
             } else {
+                monster.getAngriffTimer().stop();
                 statusLabel.setText("Spieler gewinnt!");
 
                 //Monsteritem werden dem Spieler übertragen.

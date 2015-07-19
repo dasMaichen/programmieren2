@@ -23,7 +23,7 @@ public abstract class KampfAction extends AbstractAction {
     @Override
     public final void actionPerformed(ActionEvent actionEvent) {
         fuehreSpielerAktionAus();
-        new MonsterAction().actionPerformed(actionEvent);
+        monster.new MonsterAction().actionPerformed(actionEvent);
         Player.getInstance().regenerateAp();
     }
 
@@ -37,20 +37,7 @@ public abstract class KampfAction extends AbstractAction {
         statusQueue.add(status);
     }
 
-    private class MonsterAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            setzeStatus("Monster greift an!");
-            int monsterDamage = monster.attack(Player.getInstance());
-            if (monsterDamage == -1) {
-                setzeStatus("Monster verfehlt!");
-            } else if (monsterDamage == -2) {
-                setzeStatus("Monster tut nichts.");
-            } else {
-                setzeStatus(String.format("Monster trifft und macht %d Schaden!", monsterDamage));
-            }
-        }
-    }
+
 
     private class TimerCallback implements ActionListener {
         @Override

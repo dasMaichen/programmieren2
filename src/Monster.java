@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 /**
@@ -5,6 +8,7 @@ import java.util.Random;
  */
 public class Monster extends Creature {
 
+    private final Timer angriffTimer = new Timer(10000, new MonsterAction());
 
     /**
      * The Name.
@@ -73,5 +77,21 @@ public class Monster extends Creature {
     public String toString() {
         return String.format("%s -- HP %d -- ATK %d%n", getName(), getHp(), getAtk());
     }
+
+    public Timer getAngriffTimer() {
+        return angriffTimer;
+    }
+
+
+    public class MonsterAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            int monsterDamage = attack(Player.getInstance());
+            angriffTimer.setDelay((int) (Math.random() * 1000));
+            System.out.println("Nächster Angriff in " + angriffTimer.getDelay() + "ms" );
+        }
+    }
+
 
 }
